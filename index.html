@@ -1,0 +1,824 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Grundeck для дилеров</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&display=swap">
+<style>
+/* Layout: по мотивам сайта Кэмпа — Manrope с плотным трекингом, двухтоновые заголовки, мягкие карточки на светло-серой подложке со скруглением 18–26px, пилюли вместо линеек. Один светлый вид намеренно. */
+:root {
+  --paper: #FFFFFF;
+  --ink: #080808;
+  --grey: #6C6C6C;
+  --soft: #A8A8A4;
+  --rule: #E6E6E3;
+  --rule-2: #DADAD6;
+  --panel: #F3F3F1;
+  --panel-2: #EAEAE7;
+  --wood: #8A6E58;
+  --free: #3F7A5E;
+  --on-ink: #9C9C9C;
+  --line-ink: #262626;
+  --r-lg: clamp(18px, 1.8vw, 26px);
+  --r-md: clamp(12px, 1.1vw, 16px);
+  --r-sm: 10px;
+  --pad-card: clamp(18px, 2.2vw, 40px);
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --font: "Manrope", "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+/* Корень масштабирует весь текст: телефон → 1440 → 4K */
+html { font-size: clamp(100%, 87% + 0.35vw, 130%); }
+body { background: var(--paper); color: var(--ink); font-family: var(--font); font-weight: 400; font-size: 0.938rem; line-height: 1.55; letter-spacing: -.01em; }
+.page {
+  max-width: 2400px; margin: 0 auto;
+  padding-left: max(clamp(1rem, 0.4rem + 3.6vw, 5rem), env(safe-area-inset-left, 0px));
+  padding-right: max(clamp(1rem, 0.4rem + 3.6vw, 5rem), env(safe-area-inset-right, 0px));
+}
+/* Широкий экран: заголовок раздела слева, содержимое справа — вместо растяжения в одну колонку */
+@media (min-width: 1280px) {
+  section.part { grid-template-columns: minmax(18rem, 1.1fr) minmax(0, 2.4fr); column-gap: clamp(2rem, 4vw, 7rem); }
+  section.part h2 { font-size: clamp(2rem, 0.9rem + 1.5vw, 3.4rem); overflow-wrap: anywhere; }
+  section.part > * { grid-column: 2; }
+  section.part > .head { grid-column: 1; grid-row: 1; align-self: start; }
+  section.part > .cap:first-child { grid-column: 1; grid-row: 1; }
+  .cover { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); column-gap: clamp(2rem, 4vw, 7rem); align-items: end; }
+  .cover > .brand, .cover > h1, .cover > .stats, .cover > .byline { grid-column: 1 / -1; }
+  .cover > p { grid-column: 1; }
+}
+.cap { font-size: 0.781rem; font-weight: 500; letter-spacing: -.01em; color: var(--grey); }
+h1, h2, h3 { font-weight: 500; margin: 0; text-wrap: balance; }
+h2 { font-size: clamp(2rem, 1.2rem + 2.4vw, 3.6rem); line-height: .96; letter-spacing: -.055em; }
+h2 span { color: var(--grey); font-weight: 400; }
+h3 { font-size: 1.3rem; line-height: 1.2; letter-spacing: -.035em; }
+p { margin: 0; max-width: 64ch; }
+.sub { color: var(--grey); }
+.price { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* Обложка */
+.cover { padding-block: clamp(28px, 3vw, 56px) clamp(48px, 5vw, 96px); display: grid; gap: clamp(20px, 2vw, 32px); }
+.brand { font-size: 1rem; font-weight: 600; letter-spacing: -.05em; }
+h1 { font-size: clamp(2.8rem, 1.4rem + 5.6vw, 6.6rem); line-height: .9; letter-spacing: -.07em; margin-top: clamp(40px, 6vw, 120px); }
+h1 span { color: var(--grey); font-weight: 400; display: block; }
+.cover p { color: var(--grey); font-size: 1.05rem; line-height: 1.5; }
+.stats { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 12px; margin-top: clamp(8px, 1.5vw, 24px); }
+.stats > div { background: var(--panel); border-radius: var(--r-lg); padding: var(--pad-card); display: grid; gap: 8px; align-content: start; min-width: 0; }
+.stats > div:first-child { background: var(--ink); color: var(--paper); }
+.stats > div:first-child .cap, .stats > div:first-child small { color: var(--on-ink); }
+.stats b { font-weight: 500; font-size: 1.6rem; letter-spacing: -.05em; line-height: 1.1; }
+.stats > div:first-child b { font-size: clamp(2.2rem, 1.6rem + 1.6vw, 3.4rem); line-height: 1; }
+.stats small { color: var(--grey); font-size: 0.812rem; }
+.flag { font-size: 0.75rem; font-weight: 600; background: var(--paper); color: var(--ink); padding: 5px 12px; border-radius: 999px; justify-self: start; margin-bottom: 6px; }
+.byline { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+
+section.part { padding-block: clamp(56px, 6vw, 130px); display: grid; gap: clamp(14px, 1.3vw, 22px); }
+section.part + section.part { border-top: 1px solid var(--rule); }
+.head { display: grid; gap: 14px; align-content: start; margin-bottom: clamp(8px, 1.2vw, 20px); }
+
+/* Номер-пилюля, как в программе Кэмпа */
+.num, ol.rows .n {
+  display: inline-grid; place-items: center; justify-self: start; width: 40px; height: 25px;
+  border: 1px solid rgba(8,8,8,.4); border-radius: 999px; font-size: 0.688rem; font-weight: 500; color: var(--ink); letter-spacing: 0; font-variant-numeric: tabular-nums;
+}
+
+/* Идеи */
+.idea { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: clamp(20px, 2.6vw, 48px); background: var(--panel); border-radius: var(--r-lg); padding: var(--pad-card); align-items: start; }
+.idea .txt { display: grid; gap: 14px; }
+.idea ul { margin: 0; padding: 0; list-style: none; display: grid; }
+.idea li { padding: 11px 0; border-top: 1px solid var(--rule-2); color: var(--grey); }
+.idea li b { color: var(--ink); font-weight: 600; }
+.demo { background: var(--paper); border-radius: var(--r-md); padding: clamp(14px, 1.4vw, 22px); display: grid; gap: 14px; min-width: 0; box-shadow: 0 10px 30px rgba(0,0,0,.04); }
+.demo .cap { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+
+/* Карта */
+.map { position: relative; aspect-ratio: 16 / 10; max-width: 100%; background: var(--panel); border-radius: var(--r-sm); overflow: hidden; }
+.radius { position: absolute; left: 15.6%; top: -19%; width: 86%; height: 90%; border: 1px dashed var(--soft); border-radius: 50%; pointer-events: none; }
+.radius-l { position: absolute; left: 62%; top: 62%; font-size: 0.656rem; color: var(--soft); }
+.city { position: absolute; transform: translate(-50%, -50%); display: flex; align-items: center; gap: 5px; background: none; border: 0; padding: 4px; font: inherit; font-size: 0.719rem; color: var(--grey); cursor: pointer; white-space: nowrap; transition: color .2s ease; }
+.city i { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--free); background: var(--paper); flex: none; transition: box-shadow .25s var(--ease); }
+.city.busy i { background: var(--wood); border-color: var(--wood); }
+.city[aria-pressed="true"] { color: var(--ink); font-weight: 600; }
+.city[aria-pressed="true"] i { box-shadow: 0 0 0 5px rgba(8,8,8,.1); }
+.city:focus-visible { outline: 2px solid var(--ink); outline-offset: 1px; border-radius: 6px; }
+.city.left { flex-direction: row-reverse; }
+.mapcard { background: var(--panel); border-radius: var(--r-sm); padding: 12px 14px; display: grid; gap: 4px; }
+.mapcard b { font-weight: 600; font-size: 1.05rem; letter-spacing: -.03em; }
+.legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 0.75rem; color: var(--grey); }
+.legend span { display: inline-flex; gap: 6px; align-items: center; }
+.legend i { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--free); }
+.legend i.b { background: var(--wood); border-color: var(--wood); }
+
+/* Калькуляторы */
+.seg { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; background: var(--panel); border-radius: 999px; }
+.seg button { font: inherit; font-size: 0.812rem; font-weight: 500; padding: 9px 12px; border: 0; border-radius: 999px; background: transparent; color: var(--ink); cursor: pointer; transition: background .25s var(--ease), color .25s ease; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.seg button:focus-visible { outline: 2px solid var(--wood); outline-offset: 2px; }
+.range { display: grid; gap: 8px; }
+.range-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.range-top b { font-weight: 500; font-size: 1.5rem; letter-spacing: -.05em; }
+input[type="range"] { width: 100%; accent-color: var(--ink); }
+input[type="range"]:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+.out { display: grid; grid-template-columns: 1fr 1fr; background: var(--panel); border-radius: var(--r-sm); }
+.out > div { padding: 12px 14px; display: grid; gap: 4px; min-width: 0; }
+.out > div + div { border-left: 1px solid var(--rule-2); }
+.out b { font-weight: 500; font-size: 1.55rem; letter-spacing: -.05em; }
+.bar { height: 6px; background: var(--panel-2); border-radius: 999px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--free); width: 0; border-radius: 999px; transition: width .35s var(--ease); }
+.variants { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--rule-2); }
+.variants > div { padding: 12px 14px 0 0; display: grid; gap: 4px; align-content: start; min-width: 0; }
+.variants > div + div { border-left: 1px solid var(--rule-2); padding-left: 14px; }
+.variants b { font-weight: 600; }
+.pill { justify-self: start; font-size: 0.75rem; font-weight: 600; background: var(--ink); color: var(--paper); padding: 6px 14px; border-radius: 999px; }
+.cmp { display: grid; gap: 10px; background: var(--panel); border-radius: var(--r-sm); padding: 14px; }
+.cmp-row { display: grid; gap: 6px; }
+.cmp-row .l { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 0.844rem; }
+.cmp-row .l span:last-child { font-variant-numeric: tabular-nums; }
+.cmp-bar { height: 10px; background: var(--panel-2); border-radius: 999px; overflow: hidden; }
+.cmp-bar i { display: block; height: 100%; border-radius: 999px; transition: width .35s var(--ease); }
+.saving { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; border-top: 1px solid var(--rule-2); padding-top: 10px; }
+.saving b { font-weight: 500; font-size: 1.55rem; letter-spacing: -.05em; color: var(--free); }
+
+/* Тест на прочность */
+.tests { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.tile { display: grid; gap: 6px; }
+.shot { position: relative; aspect-ratio: 1; max-width: 100%; overflow: hidden; border-radius: var(--r-sm);
+  background: repeating-linear-gradient(90deg, #8F735D 0 30%, #7B614D 30% 32%, #8F735D 32% 64%, #7B614D 64% 66%, #8F735D 66% 100%); }
+.shot::after { content: "3–5 сек"; position: absolute; right: 6px; bottom: 6px; font-size: 0.625rem; color: #FFFFFF; background: rgba(0,0,0,.45); padding: 2px 7px; border-radius: 999px; }
+.shot .read { position: absolute; left: 6px; top: 6px; font-size: 0.656rem; color: #FFFFFF; background: rgba(0,0,0,.45); padding: 2px 7px; border-radius: 999px; z-index: 2; }
+.kettle { position: absolute; left: 8%; top: 8%; width: 38%; height: 24%; background: #E8E8E8; border-radius: 40% 40% 12% 12%; transform: rotate(18deg); }
+.kettle::after { content: ""; position: absolute; right: -32%; top: 30%; width: 40%; height: 14%; background: #E8E8E8; border-radius: 2px; transform: rotate(-30deg); transform-origin: left center; }
+.stream { position: absolute; left: 53%; top: 30%; width: 4px; height: 0; background: rgba(225,238,255,.85); border-radius: 2px; }
+.drop { position: absolute; left: 54%; width: 6px; height: 12px; margin-left: -3px; border-radius: 3px 3px 6px 6px; background: rgba(230,240,255,.9); top: 30%; opacity: 0; }
+.drop:nth-of-type(4) { left: 50%; animation-delay: .3s !important; }
+.drop:nth-of-type(5) { left: 58%; animation-delay: .6s !important; }
+.puddle { position: absolute; left: 34%; width: 40%; bottom: 14%; height: 5px; border-radius: 50%; background: rgba(225,238,255,.6); transform: scaleX(.2); }
+.vapor { position: absolute; left: 44%; bottom: 20%; width: 10px; height: 26px; border-radius: 50%; background: rgba(255,255,255,.35); filter: blur(3px); opacity: 0; }
+.vapor.v2 { left: 60%; animation-delay: .9s !important; }
+.key { position: absolute; top: 46%; left: 12%; width: 40%; height: 12px; border-radius: 6px; background: #C9CDD2; transform-origin: left center; z-index: 1; }
+.key::before { content: ""; position: absolute; left: -10px; top: -7px; width: 24px; height: 24px; border-radius: 50%; border: 5px solid #C9CDD2; }
+.trail { position: absolute; top: 56%; left: 50%; width: 0; height: 2px; background: rgba(255,255,255,.5); }
+.weight { position: absolute; left: 25%; width: 50%; height: 34%; top: 8%; background: #2B2B2B; color: #FFFFFF; display: grid; place-items: center; font-size: 0.812rem; font-weight: 600; border-radius: 6px; z-index: 1; }
+.dust { position: absolute; left: 18%; right: 18%; top: 86%; height: 2px; background: rgba(255,255,255,.4); opacity: 0; }
+.tile b { font-weight: 600; letter-spacing: -.02em; }
+.tile span { color: var(--grey); font-size: 0.812rem; }
+@media (prefers-reduced-motion: no-preference) {
+  .stream { animation: pour 3s ease-in-out infinite; }
+  .drop { animation: fall 1.2s ease-in infinite; }
+  .puddle { animation: spread 3s ease-out infinite; }
+  .vapor { animation: rise 1.8s ease-out infinite; }
+  .key { animation: drag 2.4s ease-in-out infinite; }
+  .trail { animation: trail 2.4s ease-in-out infinite; }
+  .weight { animation: press 2.4s cubic-bezier(.5,0,.3,1) infinite; }
+  .dust { animation: dust 2.4s ease-out infinite; }
+  @keyframes pour { 0%, 10% { height: 0; } 30%, 70% { height: 50%; } 90%, 100% { height: 0; top: 80%; } }
+  @keyframes fall { 0% { top: 32%; opacity: 0; } 15% { opacity: 1; } 80% { top: 80%; opacity: 1; } 100% { top: 82%; opacity: 0; } }
+  @keyframes spread { 0%, 20% { transform: scaleX(.2); opacity: 0; } 50%, 80% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1.1); opacity: 0; } }
+  @keyframes rise { 0% { bottom: 18%; opacity: 0; } 30% { opacity: 1; } 100% { bottom: 60%; opacity: 0; } }
+  @keyframes drag { 0%, 15% { transform: translateX(0) rotate(-4deg); } 60%, 75% { transform: translateX(80%) rotate(-4deg); } 100% { transform: translateX(0) rotate(-4deg); } }
+  @keyframes trail { 0%, 15% { left: 22%; width: 0; opacity: 1; } 60% { left: 22%; width: 56%; opacity: .8; } 85%, 100% { left: 22%; width: 56%; opacity: 0; } }
+  @keyframes press { 0%, 20% { top: 8%; } 45%, 75% { top: 54%; } 100% { top: 8%; } }
+  @keyframes dust { 0%, 42% { opacity: 0; transform: scaleX(.6); } 48% { opacity: 1; transform: scaleX(1); } 70%, 100% { opacity: 0; transform: scaleX(1.2); } }
+}
+
+/* Живые блоки */
+.live { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(12px, 1.2vw, 20px); }
+.card { background: var(--panel); border-radius: var(--r-lg); padding: var(--pad-card); display: grid; gap: 14px; align-content: start; min-width: 0; }
+.card h3 { font-size: 1.3rem; }
+.small { font-size: 0.781rem; }
+.tabs, .stepper { display: flex; flex-wrap: wrap; gap: 6px; }
+.tabs button, .stepper button { font: inherit; font-size: 0.812rem; font-weight: 500; padding: 8px 16px; border: 1px solid rgba(8,8,8,.14); border-radius: 999px; background: var(--paper); color: var(--ink); cursor: pointer; transition: background .25s var(--ease), color .25s ease, border-color .25s ease; }
+.stepper button { width: 42px; height: 42px; padding: 0; display: grid; place-items: center; }
+.tabs button[aria-pressed="true"], .stepper button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.tabs button:focus-visible, .stepper button:focus-visible, .sw button:focus-visible, .stories button:focus-visible { outline: 2px solid var(--wood); outline-offset: 2px; }
+
+.deck { position: relative; aspect-ratio: 16 / 9; max-width: 100%; overflow: hidden; border-radius: var(--r-md);
+  background: repeating-linear-gradient(180deg, var(--c1) 0 15%, var(--c2) 15% 16.4%); transition: background .4s ease; }
+.deck::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, rgba(255,255,255,.04) 0 2px, transparent 2px 9px); }
+.deck-name { position: absolute; left: 10px; bottom: 10px; font-size: 0.75rem; font-weight: 500; color: #FFFFFF; background: rgba(0,0,0,.45); padding: 4px 10px; border-radius: 999px; z-index: 2; }
+.scene-pool { position: absolute; left: 0; right: 0; top: 0; height: 38%; background: linear-gradient(180deg, #5FA3C7, #3E86AD); border-bottom: 6px solid #D9D9D9; transform: translateY(-110%); transition: transform .5s var(--ease); }
+.scene-pool::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(170deg, rgba(255,255,255,.18) 0 3px, transparent 3px 18px); }
+.scene-steps { position: absolute; right: 0; bottom: 0; width: 46%; height: 70%; display: grid; grid-template-rows: repeat(3, 1fr); transform: translateX(110%); transition: transform .5s var(--ease); }
+.scene-steps i { display: block; background: repeating-linear-gradient(180deg, var(--c1) 0 70%, var(--c2) 70% 76%); border-top: 3px solid var(--c2); box-shadow: -6px 0 10px rgba(0,0,0,.18); }
+.scene-steps i:nth-child(1) { margin-left: 50%; }
+.scene-steps i:nth-child(2) { margin-left: 25%; }
+.deck[data-scene="pool"] .scene-pool { transform: none; }
+.deck[data-scene="steps"] .scene-steps { transform: none; }
+.sw { display: flex; gap: 10px; }
+.sw button { width: 36px; height: 36px; border-radius: 50%; border: 3px solid var(--panel); background: var(--s); box-shadow: 0 0 0 1px var(--rule-2); cursor: pointer; padding: 0; transition: box-shadow .25s var(--ease), transform .25s var(--ease); }
+.sw button:hover { transform: translateY(-2px); }
+.sw button[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--ink); }
+
+.gen { position: relative; aspect-ratio: 16 / 9; max-width: 100%; overflow: hidden; border-radius: var(--r-md); }
+.gen-a, .gen-b { position: absolute; inset: 0; }
+.gen-a { background: repeating-linear-gradient(180deg, #8C6447 0 15%, #765238 15% 16.4%); }
+.gen-b { clip-path: inset(0 0 0 var(--cut));
+  background:
+    radial-gradient(circle at 70% 30%, rgba(255,255,255,.28) 0 12%, transparent 13%),
+    radial-gradient(circle at 85% 75%, rgba(255,255,255,.2) 0 9%, transparent 10%),
+    repeating-linear-gradient(180deg, #A99C8E 0 15%, #968A7D 15% 16.4%); }
+.gen-a span, .gen-b span { position: absolute; bottom: 10px; font-size: 0.75rem; font-weight: 500; color: #FFFFFF; background: rgba(0,0,0,.45); padding: 4px 10px; border-radius: 999px; }
+.gen-a span { left: 10px; }
+.gen-b span { right: 10px; }
+.gen-line { position: absolute; top: 0; bottom: 0; left: var(--cut); width: 2px; margin-left: -1px; background: #FFFFFF; pointer-events: none; }
+.gen-line::after { content: "↔"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 34px; height: 34px; border-radius: 50%; background: #FFFFFF; color: #111111; display: grid; place-items: center; font-size: 0.875rem; box-shadow: 0 7px 17px rgba(0,0,0,.15); }
+.gen input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; margin: 0; }
+.gen:focus-within .gen-line::after { box-shadow: 0 0 0 3px var(--wood); }
+
+.stories { position: relative; aspect-ratio: 16 / 10; max-width: 100%; overflow: hidden; color: #FFFFFF; border-radius: var(--r-md);
+  background: linear-gradient(180deg, rgba(0,0,0,.05) 40%, rgba(0,0,0,.6)), repeating-linear-gradient(180deg, #8F735D 0 15%, #7B614D 15% 16.4%); }
+.st-bars { position: absolute; top: 12px; left: 12px; right: 12px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; z-index: 2; }
+.st-bars i { height: 3px; background: rgba(255,255,255,.35); display: block; border-radius: 999px; overflow: hidden; }
+.st-bars b { display: block; height: 100%; width: 0; background: #FFFFFF; }
+.st-frame { position: absolute; left: 16px; right: 16px; bottom: 16px; display: grid; gap: 4px; }
+.st-tag { font-size: 0.75rem; font-weight: 500; opacity: .8; }
+.st-text { font-size: 1.2rem; font-weight: 500; line-height: 1.2; letter-spacing: -.035em; }
+.st-who { font-size: 0.75rem; opacity: .7; }
+.stories button { position: absolute; top: 0; bottom: 0; width: 30%; background: none; border: 0; cursor: pointer; z-index: 3; }
+.st-prev { left: 0; }
+.st-next { right: 0; }
+
+.step-card { background: var(--paper); border-radius: var(--r-md); padding: 14px 16px; display: grid; gap: 4px; min-height: 96px; align-content: start; }
+.step-card b { font-weight: 600; font-size: 1.05rem; letter-spacing: -.03em; }
+.step-track { height: 6px; background: var(--panel-2); border-radius: 999px; overflow: hidden; }
+.step-track i { display: block; height: 100%; width: 25%; background: var(--free); border-radius: 999px; transition: width .35s var(--ease); }
+
+/* Смета */
+.hero-price { display: grid; grid-template-columns: auto 1fr; gap: 6px clamp(16px, 2vw, 36px); align-items: end; padding: clamp(18px, 2vw, 32px) var(--pad-card); background: var(--panel); border-radius: var(--r-lg); }
+.hero-price .big { font-size: clamp(3rem, 1.8rem + 4vw, 5.6rem); line-height: .95; letter-spacing: -.07em; font-weight: 500; }
+.hero-price .eq { color: var(--grey); font-size: 1.05rem; line-height: 1.45; padding-bottom: 6px; }
+.hero-price .eq b { color: var(--ink); font-weight: 600; }
+.hero-price s { color: var(--soft); font-size: .42em; font-weight: 400; letter-spacing: -.02em; margin-left: 10px; vertical-align: middle; }
+.split { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 10px; }
+.split > div { background: var(--panel); border-radius: var(--r-md); padding: clamp(14px, 1.4vw, 22px); display: grid; gap: 6px; align-content: start; min-width: 0; }
+.split b { font-weight: 500; font-size: 1.45rem; letter-spacing: -.05em; }
+.split .sub { font-size: 0.812rem; line-height: 1.4; }
+.share { height: 4px; margin-top: 6px; border-radius: 999px; }
+
+ol.rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+ol.rows li { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; gap: 4px 16px; padding: clamp(16px, 1.4vw, 24px) 0; border-bottom: 1px solid var(--rule); align-items: start; transition: background .25s ease; }
+ol.rows .t { display: grid; gap: 4px; }
+ol.rows .t b { font-weight: 500; font-size: 1.2rem; letter-spacing: -.035em; line-height: 1.2; }
+ol.rows .t span { color: var(--grey); font-size: 0.875rem; }
+ol.rows .t em { font-style: normal; justify-self: start; font-size: 0.719rem; font-weight: 600; color: var(--wood); background: #F4EEE8; padding: 3px 10px; border-radius: 999px; }
+ol.rows .p { font-size: 1.1rem; font-weight: 500; letter-spacing: -.03em; text-align: right; }
+ol.rows .p s { display: block; color: var(--soft); font-size: 0.781rem; font-weight: 400; }
+
+.reuse { display: grid; gap: 12px; padding: var(--pad-card); background: var(--panel); border-radius: var(--r-lg); }
+.reuse-head { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: baseline; }
+.reuse-head b { font-weight: 500; font-size: 1.3rem; letter-spacing: -.035em; }
+.reuse-head span { color: var(--free); font-weight: 600; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { background: var(--paper); padding: 8px 16px; border-radius: 999px; font-size: 0.875rem; font-weight: 500; }
+
+.total { background: var(--ink); color: var(--paper); border-radius: var(--r-lg); padding: var(--pad-card); display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.total .cap { color: var(--on-ink); }
+.total small { display: block; color: var(--on-ink); font-size: 0.875rem; margin-top: 6px; }
+.total b { font-weight: 500; font-size: clamp(2.4rem, 1.6rem + 2.6vw, 4.2rem); letter-spacing: -.06em; line-height: 1; }
+
+/* Пакет */
+.pack { background: var(--ink); color: var(--paper); border-radius: var(--r-lg); padding: var(--pad-card); display: grid; gap: clamp(20px, 2vw, 32px); }
+.pack .cap { color: var(--on-ink); }
+.pack-top { display: flex; justify-content: space-between; gap: 16px 28px; flex-wrap: wrap; align-items: end; }
+.pack-top h3 { font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.4rem); letter-spacing: -.05em; }
+.pack-top .big { font-weight: 500; font-size: clamp(2.8rem, 1.8rem + 3.4vw, 5rem); line-height: 1; letter-spacing: -.07em; }
+.pack-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.pack-grid > div { background: #161616; border-radius: var(--r-md); padding: clamp(14px, 1.4vw, 22px); display: grid; gap: 4px; align-content: start; min-width: 0; }
+.pack-grid b { font-weight: 500; font-size: 1.45rem; letter-spacing: -.05em; }
+.pack-grid span { color: var(--on-ink); font-size: 0.844rem; }
+.pack-grid s { color: #6A6A6A; }
+.pack-gain { color: #9FD3B8; }
+
+.boxes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(12px, 1.2vw, 20px); }
+.box { background: var(--panel); border-radius: var(--r-lg); padding: var(--pad-card); display: grid; gap: 10px; align-content: start; min-width: 0; }
+.box ul { margin: 0; padding: 0; list-style: none; }
+.box li { padding: 10px 0; border-top: 1px solid var(--rule-2); color: var(--grey); font-size: 0.906rem; }
+.box li:first-child { border-top: 0; }
+.box h3 { font-size: 1.5rem; letter-spacing: -.05em; }
+.note { background: var(--panel); border-radius: var(--r-md); padding: 16px 20px; color: var(--grey); font-size: 0.875rem; max-width: none; }
+.note b { color: var(--ink); font-weight: 600; }
+.group { color: var(--grey); font-size: 0.781rem; font-weight: 500; padding: 24px 0 8px; }
+
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(12px, 1.2vw, 20px); }
+.steps > div { background: var(--panel); border-radius: var(--r-lg); padding: var(--pad-card); display: grid; gap: 8px; align-content: start; min-width: 0; }
+.steps .k { display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid rgba(8,8,8,.4); border-radius: 50%; font-size: 0.875rem; font-weight: 500; margin-bottom: 10px; }
+.steps b { font-weight: 500; font-size: 1.25rem; letter-spacing: -.035em; }
+.steps span { color: var(--grey); font-size: 0.875rem; }
+footer { padding-block: 24px 56px; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; border-top: 1px solid var(--rule); }
+
+@media (max-width: 760px) {
+  .idea { grid-template-columns: 1fr; gap: 18px; }
+  .stats { grid-template-columns: 1fr 1fr; }
+  .stats > div:first-child { grid-column: 1 / -1; }
+  .split { grid-template-columns: 1fr 1fr; }
+  .boxes, .steps, .pack-grid, .live { grid-template-columns: 1fr; }
+  .hero-price { grid-template-columns: 1fr; }
+  ol.rows li { grid-template-columns: 52px minmax(0, 1fr); }
+  ol.rows .p { grid-column: 2; text-align: left; }
+  ol.rows .p s { display: inline; margin-left: 8px; }
+  .city:not([aria-pressed="true"]) .lbl { display: none; }
+}
+@media (max-width: 460px) {
+  .tests { grid-template-columns: 1fr 1fr; }
+  .out, .variants { grid-template-columns: 1fr; }
+  .out > div + div { border-left: 0; border-top: 1px solid var(--rule-2); }
+  .variants > div + div { border-left: 0; padding-left: 0; border-top: 1px solid var(--rule-2); }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="cover">
+    <div class="brand">Grundeck</div>
+    <h1>Сайт для дилеров<span>и покупателей</span></h1>
+    <p>Две страницы под два потока трафика: дилер видит свой заработок, покупатель выбирает доску и находит дилера рядом. Самописный сайт под ключ.</p>
+    <div class="stats">
+      <div><span class="flag">Рекомендую</span><span class="cap">Пакет · 2 страницы</span><b class="price">141 500 ₽</b><small>Экономия 45 400 ₽</small></div>
+      <div><span class="cap">Страница только для дилеров</span><b class="price">89 000 ₽</b><small>10 блоков</small></div>
+      <div><span class="cap">Срок</span><b>6–7 недель</b><small>пакет · 4–5 недель дилеры</small></div>
+    </div>
+    <div class="byline"><span class="cap">Подготовила Элианора</span><span class="cap">3 ноября 2026</span></div>
+  </header>
+
+  <!-- 01 Идеи -->
+  <section class="part">
+    <div class="head">
+      <span class="cap">01 · Идеи</span>
+      <h2>Три решения, <span>которые продают сотрудничество</span></h2>
+    </div>
+
+    <article class="idea">
+      <div class="txt">
+        <span class="num">01</span>
+        <h3>Карта дилеров</h3>
+        <p class="sub">Города не ограничиваем. Каждый статус на карте работает на заявку.</p>
+        <ul>
+          <li><b>Город свободен:</b> «Займите его первым»</li>
+          <li><b>Город занят:</b> «Здесь уже работают и зарабатывают»</li>
+          <li><b>Под каждым городом:</b> счётчик переданных заявок или доход партнёров</li>
+          <li><b>Для покупателя:</b> та же карта работает как «Где купить»</li>
+        </ul>
+      </div>
+      <div class="demo">
+        <div class="cap"><span>Пример экрана</span><span>цифры условные</span></div>
+        <div class="map" id="map">
+          <div class="radius" aria-hidden="true"></div>
+          <span class="radius-l" aria-hidden="true">1 000 км от Казани</span>
+        </div>
+        <div class="mapcard" aria-live="polite"><b id="mc-title">Москва</b><span class="sub" id="mc-text"></span></div>
+        <div class="legend"><span><i></i>Свободно</span><span><i class="b"></i>Есть дилер</span></div>
+      </div>
+    </article>
+
+    <article class="idea">
+      <div class="txt">
+        <span class="num">02</span>
+        <h3>Калькулятор выгоды</h3>
+        <p class="sub">Дилер двигает объём закупки и сразу видит свой заработок и сколько осталось до бесплатной доставки.</p>
+        <div class="variants">
+          <div><b>Открытый</b><span class="sub">Страница только для дилеров, поэтому прятать нечего. Посчитает каждый.</span></div>
+          <div><b>По ИНН</b><span class="sub">Компания и город подставляются сами, цифры видит только дилер.</span></div>
+        </div>
+        <span class="pill">Оба варианта входят в стоимость</span>
+      </div>
+      <div class="demo">
+        <div class="cap"><span>Попробуйте</span><span>маржа условная, 25%</span></div>
+        <div class="seg" role="group" aria-label="Куда доставка">
+          <button type="button" id="r-region" aria-pressed="true">До 1 000 км от Казани</button>
+          <button type="button" id="r-msk" aria-pressed="false">Москва</button>
+        </div>
+        <div class="range">
+          <div class="range-top"><label for="vol" class="cap">Объём закупки</label><b class="price" id="vol-out">222 000 ₽</b></div>
+          <input type="range" id="vol" min="50000" max="500000" step="2000" value="222000">
+        </div>
+        <div class="out">
+          <div><span class="cap">Ваш заработок</span><b class="price" id="earn">≈ 55 500 ₽</b></div>
+          <div><span class="cap">Доставка</span><b id="ship">78 000 ₽</b><span class="sub" id="ship-t">до бесплатной</span></div>
+        </div>
+        <div class="bar" aria-hidden="true"><i id="bar"></i></div>
+      </div>
+    </article>
+
+    <article class="idea">
+      <div class="txt">
+        <span class="num">03</span>
+        <h3>Тест на прочность</h3>
+        <p class="sub">Три короткие гифки вместо абзацев про качество. Дилер видит, что доску не берёт ни кипяток, ни ключ, ни груз.</p>
+        <ul>
+          <li><b>Бокс образцов:</b> 4 цвета, дилер повторяет тесты у себя</li>
+          <li><b>Съёмка:</b> ваш оператор, сценарий мой</li>
+        </ul>
+      </div>
+      <div class="demo">
+        <div class="cap"><span>Как это будет выглядеть</span></div>
+        <div class="tests">
+          <div class="tile"><div class="shot" aria-hidden="true"><i class="kettle"></i><i class="stream"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="puddle"></i><i class="vapor"></i><i class="vapor v2"></i><span class="read">100 °C</span></div><b>Кипяток</b><span>Ни пятен, ни вздутия</span></div>
+          <div class="tile"><div class="shot" aria-hidden="true"><i class="trail"></i><i class="key"></i><span class="read">0 царапин</span></div><b>Ключ</b><span>Без царапин</span></div>
+          <div class="tile"><div class="shot" aria-hidden="true"><i class="weight">200 кг</i><i class="dust"></i><span class="read">прогиб 0 мм</span></div><b>Груз</b><span>Доска не прогибается</span></div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- 02 Живые блоки -->
+  <section class="part">
+    <div class="head">
+      <span class="cap">02 · Как это будет работать</span>
+      <h2>Блоки, <span>которые хочется потрогать</span></h2>
+      <p class="sub">Так ведут себя блоки на готовом сайте. Нажмите, потяните, переключите.</p>
+    </div>
+    <div class="live">
+
+      <div class="card">
+        <span class="cap">Продукт · обе страницы</span>
+        <h3>4 цвета на вашей сцене</h3>
+        <div class="deck" id="deck" style="--c1:#9A6B47;--c2:#86593A">
+          <div class="scene-pool"></div>
+          <div class="scene-steps"><i></i><i></i><i></i></div>
+          <span class="deck-name" id="deck-name">Тик · терраса</span>
+        </div>
+        <div class="tabs" role="group" aria-label="Сцена">
+          <button type="button" data-scene="" aria-pressed="true">Терраса</button>
+          <button type="button" data-scene="pool" aria-pressed="false">У бассейна</button>
+          <button type="button" data-scene="steps" aria-pressed="false">Крыльцо</button>
+        </div>
+        <div class="sw" role="group" aria-label="Цвет доски">
+          <button type="button" aria-pressed="true" data-n="Тик" data-c1="#9A6B47" data-c2="#86593A" style="--s:#9A6B47" aria-label="Тик"></button>
+          <button type="button" aria-pressed="false" data-n="Орех" data-c1="#6B4A35" data-c2="#5A3D2B" style="--s:#6B4A35" aria-label="Орех"></button>
+          <button type="button" aria-pressed="false" data-n="Графит" data-c1="#4E4E4E" data-c2="#3E3E3E" style="--s:#4E4E4E" aria-label="Графит"></button>
+          <button type="button" aria-pressed="false" data-n="Серый дуб" data-c1="#A09A90" data-c2="#8C867C" style="--s:#A09A90" aria-label="Серый дуб"></button>
+        </div>
+        <span class="sub small">На сайте вместо схемы будут фото и визуализации. Названия цветов условные.</span>
+      </div>
+
+      <div class="card">
+        <span class="cap">Почему 2-е поколение · покупатель</span>
+        <h3>Что будет через 5 лет</h3>
+        <div class="gen" id="gen" style="--cut:50%">
+          <div class="gen-a"><span>2-е поколение</span></div>
+          <div class="gen-b"><span>1-е поколение</span></div>
+          <i class="gen-line" aria-hidden="true"></i>
+          <input type="range" id="gen-r" min="5" max="95" value="50" aria-label="Сравнить поколения">
+        </div>
+        <span class="sub small">Покупатель тянет шторку и сам видит разницу: цвет держится, поверхность не седеет.</span>
+      </div>
+
+      <div class="card">
+        <span class="cap">Видеоотзывы · обе страницы</span>
+        <h3>Отзывы как сторис</h3>
+        <div class="stories" id="stories">
+          <div class="st-bars"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
+          <div class="st-frame"><span class="st-tag" id="st-tag">Приёмка</span><span class="st-text" id="st-text">Привезли 120 м², всё целое</span><span class="st-who">Бассейн-Строй, Казань · пример</span></div>
+          <button type="button" class="st-prev" aria-label="Предыдущий ролик"></button>
+          <button type="button" class="st-next" aria-label="Следующий ролик"></button>
+        </div>
+        <span class="sub small">Ролики листаются сами, тап по краю переключает. По клику открывается полное видео.</span>
+      </div>
+
+      <div class="card">
+        <span class="cap">Как начать · дилеры</span>
+        <h3>4 шага до первой отгрузки</h3>
+        <div class="stepper" role="group" aria-label="Шаги">
+          <button type="button" aria-pressed="true" data-i="0">1</button>
+          <button type="button" aria-pressed="false" data-i="1">2</button>
+          <button type="button" aria-pressed="false" data-i="2">3</button>
+          <button type="button" aria-pressed="false" data-i="3">4</button>
+        </div>
+        <div class="step-card" aria-live="polite"><b id="sp-t">Заявка</b><span class="sub" id="sp-d">Оставляете город и примерный объём. Менеджер связывается и отвечает на вопросы.</span></div>
+        <div class="step-track"><i id="sp-bar"></i></div>
+        <span class="sub small">Каждый шаг раскрывается по клику, последний ведёт к форме.</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 03 Страница для дилеров -->
+  <section class="part">
+    <div class="head">
+      <span class="cap">03 · Страница для дилеров</span>
+      <h2>Один блок под ключ <span>за 8 900 ₽</span></h2>
+    </div>
+
+    <div class="hero-price">
+      <span class="big price">8 900 ₽</span>
+      <span class="eq">за смысловой блок · 10 блоков = <b class="price">89 000 ₽</b><br>Все три идеи уже входят в стоимость</span>
+    </div>
+
+    <div>
+      <span class="cap">Из чего складывается стоимость блока</span>
+      <div class="split">
+        <div><span class="cap">Маркетинг</span><b class="price">2 200 ₽</b><span class="sub">Исследование, смысл, текст</span><div class="share" style="background:var(--ink)"></div></div>
+        <div><span class="cap">Дизайн</span><b class="price">2 800 ₽</b><span class="sub">Компьютер, планшет и мобильная версия</span><div class="share" style="background:var(--wood)"></div></div>
+        <div><span class="cap">Вёрстка</span><b class="price">2 700 ₽</b><span class="sub">Самописный код и адаптация под телефон</span><div class="share" style="background:var(--soft)"></div></div>
+        <div><span class="cap">Анимация</span><b class="price">1 200 ₽</b><span class="sub">Появление, интерактив, микродвижение</span><div class="share" style="background:var(--free)"></div></div>
+      </div>
+    </div>
+
+    <ol class="rows">
+      <li><span class="n">01</span><span class="t"><b>Первый экран</b><span>Оффер для дилера, видео доски, кнопки «Стать дилером» и «Получить образцы»</span></span><span class="p price">8 900 ₽</span></li>
+      <li><span class="n">02</span><span class="t"><b>Продукт</b><span>Террасная и ступенчатая доска, переключатель 4 цветов</span></span><span class="p price">8 900 ₽</span></li>
+      <li><span class="n">03</span><span class="t"><em>Идея 03</em><b>Тест на прочность</b><span>Гифки: кипяток, ключ, груз</span></span><span class="p price">8 900 ₽</span></li>
+      <li><span class="n">04</span><span class="t"><b>Кому подходит</b><span>Монтажники, строймагазины, бассейны и ландшафт: выгода для каждого</span></span><span class="p price">8 900 ₽</span></li>
+      <li><span class="n">05</span><span class="t"><em>Идея 02</em><b>Калькулятор выгоды</b><span>Открытый или по ИНН: заработок и порог бесплатной доставки</span></span><span class="p price">8 900 ₽</span></li>
+      <li><span class="n">06</span><span class="t"><b>Логистика</b><span>Бесплатно от 150 000 ₽ до Москвы и от 300 000 ₽ в радиусе 1 000 км</span></span><span class="p price">8 900 ₽</span></li>
+      <li><span class="n">07</span><span class="t"><em>Идея 01</em><b>Карта дилеров</b><span>Свободные города, действующие партнёры, счётчик заявок</span></span><span class="p price">8 900 ₽</span></li>
+      <li><span class="n">08</span><span class="t"><b>Сертификаты и поддержка</b><span>Российский сертификат, материалы для рекламы, передача заявок</span></span><span class="p price">8 900 ₽</span></li>
+      <li><span class="n">09</span><span class="t"><b>Видеоотзывы</b><span>Приёмка, монтаж, мнение клиента. В превью гифки, по клику полное видео</span></span><span class="p price">8 900 ₽</span></li>
+      <li><span class="n">10</span><span class="t"><b>Как начать и заявка</b><span>4 шага до первой отгрузки, бокс образцов, форма заявки</span></span><span class="p price">8 900 ₽</span></li>
+    </ol>
+
+    <p class="note"><b>Структура предварительная.</b> Точную утверждаем после исследования рынка: реклама, офферы и воронки игроков в Казани, Москве и других регионах, включая догоняющую рекламу в РСЯ.</p>
+
+    <div class="total">
+      <div><span class="cap">Итого страница для дилеров</span><small>10 блоков · 3 идеи · 3 разрешения · 1 круг правок</small></div>
+      <b class="price">89 000 ₽</b>
+    </div>
+
+    <div class="boxes">
+      <div class="box">
+        <span class="cap">Входит без доплаты</span>
+        <ul>
+          <li>Шапка и подвал</li>
+          <li>Яндекс Метрика с целями</li>
+          <li>Политика ПДн и cookie-баннер</li>
+          <li>Тесты на устройствах и запуск</li>
+        </ul>
+      </div>
+      <div class="box">
+        <span class="cap">От вас нужно</span>
+        <ul>
+          <li>Фото доски и объектов</li>
+          <li>Сертификаты и характеристики</li>
+          <li>Маржа и условия доставки для калькулятора</li>
+          <li>Список действующих дилеров</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 Пакет -->
+  <section class="part">
+    <div class="head">
+      <span class="cap">04 · Пакет · рекомендую</span>
+      <h2>Вторая страница <span>для покупателя</span></h2>
+      <p class="sub">Трафик из Reels не смешивается: покупатель не видит маржу дилера, а дилер не тонет в текстах для розницы. У каждого потока своя страница и своя заявка.</p>
+    </div>
+
+    <article class="idea">
+      <div class="txt">
+        <span class="num">04</span>
+        <h3>Калькулятор экономии</h3>
+        <p class="sub">Главный страх покупателя — доска дороже дерева. Калькулятор показывает, что через несколько лет она дешевле: без масла, покраски и замены досок.</p>
+        <ul>
+          <li><b>Покупатель:</b> вводит площадь и видит экономию за 10 лет</li>
+          <li><b>Цены:</b> средние по рынку, без вашей РЦ</li>
+        </ul>
+      </div>
+      <div class="demo">
+        <div class="cap"><span>Попробуйте</span><span>цифры условные</span></div>
+        <div class="range">
+          <div class="range-top"><label for="area" class="cap">Площадь террасы</label><b class="price" id="area-out">40 м²</b></div>
+          <input type="range" id="area" min="10" max="120" step="1" value="40">
+        </div>
+        <div class="cmp">
+          <span class="cap">Расходы за 10 лет</span>
+          <div class="cmp-row"><div class="l"><span>Доска Grundeck</span><span id="c-dpk"></span></div><div class="cmp-bar"><i id="b-dpk" style="background:var(--free)"></i></div></div>
+          <div class="cmp-row"><div class="l"><span>Лиственница + уход</span><span id="c-wood"></span></div><div class="cmp-bar"><i id="b-wood" style="background:var(--wood)"></i></div></div>
+          <div class="saving"><span class="cap">Экономия</span><b class="price" id="c-save"></b></div>
+        </div>
+      </div>
+    </article>
+
+    <div class="hero-price">
+      <span class="big price">7 500 ₽<s>8 900 ₽</s></span>
+      <span class="eq">за блок в пакете · 7 уникальных блоков = <b class="price">52 500 ₽</b></span>
+    </div>
+
+    <ol class="rows">
+      <li><span class="n">01</span><span class="t"><b>Первый экран</b><span>Терраса мечты и кнопка «Найти дилера рядом»</span></span><span class="p price">7 500 ₽<s>8 900 ₽</s></span></li>
+      <li><span class="n">02</span><span class="t"><em>Идея 04</em><b>Калькулятор экономии</b><span>Доска против лиственницы за 10 лет</span></span><span class="p price">7 500 ₽<s>8 900 ₽</s></span></li>
+      <li><span class="n">03</span><span class="t"><b>Почему второе поколение</b><span>Не выцветает, не скользит, не требует масла</span></span><span class="p price">7 500 ₽<s>8 900 ₽</s></span></li>
+      <li><span class="n">04</span><span class="t"><b>Идеи для участка</b><span>У бассейна, крыльцо, веранда: готовые объекты в 4 цветах</span></span><span class="p price">7 500 ₽<s>8 900 ₽</s></span></li>
+      <li><span class="n">05</span><span class="t"><b>Как проходит покупка</b><span>Заявка, дилер рядом, замер, монтаж</span></span><span class="p price">7 500 ₽<s>8 900 ₽</s></span></li>
+      <li><span class="n">06</span><span class="t"><b>Где купить</b><span>Карта дилеров и заявка, которую вы передаёте ближайшему партнёру</span></span><span class="p price">7 500 ₽<s>8 900 ₽</s></span></li>
+      <li><span class="n">07</span><span class="t"><b>Вопросы покупателя</b><span>Уход, гарантия, монтаж зимой, сроки</span></span><span class="p price">7 500 ₽<s>8 900 ₽</s></span></li>
+    </ol>
+
+    <div class="reuse">
+      <div class="reuse-head"><b>Адаптируем с дилерской страницы</b><span>0 ₽ вместо 35 600 ₽</span></div>
+      <div class="chips"><span class="chip">Тест на прочность</span><span class="chip">Продукт и 4 цвета</span><span class="chip">Сертификаты</span><span class="chip">Видеоотзывы</span></div>
+      <span class="sub">Переписываем тексты под покупателя. Стоимость этих блоков уходит в экономию пакета. Страница получается из 11 блоков.</span>
+    </div>
+
+    <div class="pack">
+      <div class="pack-top">
+        <div><span class="cap">Пакет · 2 страницы</span><h3>Дилеры + покупатели</h3></div>
+        <span class="big price">141 500 ₽</span>
+      </div>
+      <div class="pack-grid">
+        <div><span>Страница для дилеров</span><b class="price">89 000 ₽</b><span>10 блоков</span></div>
+        <div><span>Страница для покупателя</span><b class="price">52 500 ₽</b><span><s>97 900 ₽</s> · 11 блоков</span></div>
+        <div><span>Экономия пакета</span><b class="price pack-gain">45 400 ₽</b><span>Две страницы отдельно — 186 900 ₽</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 Опции -->
+  <section class="part">
+    <div class="head">
+      <span class="cap">05 · По желанию</span>
+      <h2>Дополнительные <span>опции</span></h2>
+      <p class="sub">Идеи уже работают в базовой версии. Опции их усиливают.</p>
+    </div>
+    <ol class="rows">
+      <li><span class="n">01</span><span class="t"><b>Заявки в Telegram-бот</b><span>Каждая заявка сразу приходит менеджеру в Telegram</span></span><span class="p price">3 000 ₽</span></li>
+      <li><span class="n">02</span><span class="t"><b>Новый дилер на карте</b><span>Добавляю город, статус и счётчик</span></span><span class="p price">1 000 ₽ / дилер</span></li>
+      <li><span class="n">03</span><span class="t"><b>Карта, которую обновляете сами</b><span>Дилеров и счётчик заявок меняете в Google Таблице без меня</span></span><span class="p price">7–10 тыс. ₽</span></li>
+    </ol>
+    <div class="group">Если нужна админка</div>
+    <ol class="rows">
+      <li><span class="n">04</span><span class="t"><b>Перенос на WordPress</b><span>Тексты, фото и цифры меняете сами в админке</span></span><span class="p price">от 15 000 ₽ / стр.</span></li>
+      <li><span class="n">05</span><span class="t"><b>Каталог на WordPress</b><span>Карточки товаров, фильтры, управление из админки</span></span><span class="p price">от 18 000 ₽</span></li>
+    </ol>
+
+    <div class="box">
+      <span class="cap">Регулярные расходы</span>
+      <h3>Оплачиваются напрямую</h3>
+      <ul>
+        <li>Хостинг</li>
+        <li>Домен</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Шаги -->
+  <section class="part">
+    <span class="cap">Следующие шаги</span>
+    <div class="steps">
+      <div><span class="k">1</span><b>Договор</b><span>Фиксируем пакет и опции</span></div>
+      <div><span class="k">2</span><b>Предоплата 50%</b><span>Остаток по договору</span></div>
+      <div><span class="k">3</span><b>Старт</b><span>Исследование рынка в первую неделю</span></div>
+    </div>
+  </section>
+
+  <footer><span class="cap">Grundeck · КП на сайт</span><span class="cap">Элианора</span></footer>
+</div>
+
+<script>
+(function () {
+  function fmt(n) { return Math.round(n).toLocaleString('ru-RU').replace(/ /g, ' '); }
+
+  // Карта: координаты пересчитаны из долготы/широты в проценты блока
+  var cities = [
+    { n: 'Санкт-Петербург', x: 6.4, y: 6, d: 0 },
+    { n: 'Москва', x: 26.7, y: 26.3, d: 0 },
+    { n: 'Нижний Новгород', x: 44.4, y: 22, d: 0 },
+    { n: 'Казань', x: 58.6, y: 28, d: 1, l: 18 },
+    { n: 'Пермь', x: 78.3, y: 15, d: 0, left: true },
+    { n: 'Екатеринбург', x: 90.6, y: 22, d: 0, left: true },
+    { n: 'Уфа', x: 77.8, y: 33, d: 0, left: true },
+    { n: 'Самара', x: 61.4, y: 40, d: 0 },
+    { n: 'Воронеж', x: 31.1, y: 46.5, d: 0 },
+    { n: 'Ростов-на-Дону', x: 32.5, y: 66, d: 0 },
+    { n: 'Краснодар', x: 30.6, y: 79, d: 0 },
+    { n: 'Махачкала', x: 54.2, y: 89, d: 1, l: 4 }
+  ];
+  var map = document.getElementById('map');
+  var t = document.getElementById('mc-title'), tx = document.getElementById('mc-text');
+  var btns = [];
+  function word(n) { var m = n % 10, h = n % 100; if (m === 1 && h !== 11) return 'заявка'; if (m >= 2 && m <= 4 && (h < 12 || h > 14)) return 'заявки'; return 'заявок'; }
+  function pick(i) {
+    btns.forEach(function (b, j) { b.setAttribute('aria-pressed', j === i ? 'true' : 'false'); });
+    var c = cities[i];
+    t.textContent = c.n;
+    tx.textContent = c.d
+      ? 'Здесь уже работает дилер · передано ' + c.l + ' ' + word(c.l) + ' за месяц · станьте следующим'
+      : 'Свободно · займите город первым';
+  }
+  cities.forEach(function (c, i) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'city' + (c.d ? ' busy' : '') + (c.left ? ' left' : '');
+    b.style.left = c.x + '%'; b.style.top = c.y + '%';
+    b.innerHTML = '<i></i><span class="lbl"></span>';
+    b.querySelector('.lbl').textContent = c.n;
+    b.setAttribute('aria-label', c.n + (c.d ? ', есть дилер' : ', свободно'));
+    b.addEventListener('click', function () { pick(i); });
+    map.appendChild(b); btns.push(b);
+  });
+  pick(1);
+
+  // Калькулятор выгоды: маржа условная 25%, пороги бесплатной доставки из встречи
+  var vol = document.getElementById('vol');
+  var rRegion = document.getElementById('r-region'), rMsk = document.getElementById('r-msk');
+  var limit = 300000;
+  function calc() {
+    var v = +vol.value;
+    document.getElementById('vol-out').textContent = fmt(v) + ' ₽';
+    document.getElementById('earn').textContent = '≈ ' + fmt(v * 0.25) + ' ₽';
+    var left = limit - v;
+    document.getElementById('ship').textContent = left > 0 ? fmt(left) + ' ₽' : 'Бесплатно';
+    document.getElementById('ship-t').textContent = left > 0 ? 'до бесплатной' : 'порог ' + fmt(limit) + ' ₽ пройден';
+    document.getElementById('bar').style.width = Math.min(100, v / limit * 100) + '%';
+  }
+  function setRegion(msk) {
+    limit = msk ? 150000 : 300000;
+    rMsk.setAttribute('aria-pressed', msk ? 'true' : 'false');
+    rRegion.setAttribute('aria-pressed', msk ? 'false' : 'true');
+    calc();
+  }
+  rRegion.addEventListener('click', function () { setRegion(false); });
+  rMsk.addEventListener('click', function () { setRegion(true); });
+  vol.addEventListener('input', calc);
+  calc();
+
+  // Калькулятор экономии: условно ДПК 6 500 ₽/м² без ухода, лиственница 4 000 ₽/м² + 400 ₽/м² в год
+  var area = document.getElementById('area');
+  function save() {
+    var s = +area.value;
+    var dpk = 6500 * s, wood = (4000 + 400 * 10) * s;
+    document.getElementById('area-out').textContent = s + ' м²';
+    document.getElementById('c-dpk').textContent = fmt(dpk) + ' ₽';
+    document.getElementById('c-wood').textContent = fmt(wood) + ' ₽';
+    document.getElementById('c-save').textContent = fmt(wood - dpk) + ' ₽';
+    document.getElementById('b-dpk').style.width = (dpk / wood * 100) + '%';
+    document.getElementById('b-wood').style.width = '100%';
+  }
+  area.addEventListener('input', save);
+  save();
+
+  // Цвета и сцены
+  var deck = document.getElementById('deck'), deckName = document.getElementById('deck-name');
+  var sceneNames = { '': 'терраса', pool: 'у бассейна', steps: 'крыльцо' };
+  var curColor = 'Тик', curScene = '';
+  function label() { deckName.textContent = curColor + ' · ' + sceneNames[curScene]; }
+  document.querySelectorAll('.sw button').forEach(function (b, _, all) {
+    b.addEventListener('click', function () {
+      all.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      deck.style.setProperty('--c1', b.dataset.c1); deck.style.setProperty('--c2', b.dataset.c2);
+      curColor = b.dataset.n; label();
+    });
+  });
+  document.querySelectorAll('.tabs button').forEach(function (b, _, all) {
+    b.addEventListener('click', function () {
+      all.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      curScene = b.dataset.scene; deck.setAttribute('data-scene', curScene); label();
+    });
+  });
+
+  // Слайдер поколений
+  var gen = document.getElementById('gen');
+  document.getElementById('gen-r').addEventListener('input', function (e) { gen.style.setProperty('--cut', e.target.value + '%'); });
+
+  // Сторис
+  var stories = [
+    ['Приёмка', 'Привезли 120 м², всё целое'],
+    ['Распаковка', 'Цвет как на образцах'],
+    ['Монтаж', 'Бригада уложила за два дня'],
+    ['Мнение', 'Клиент доволен, берём ещё']
+  ];
+  var bars = document.querySelectorAll('.st-bars b');
+  var si = 0, sp = 0, still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function showStory(i) {
+    si = (i + stories.length) % stories.length; sp = 0;
+    document.getElementById('st-tag').textContent = stories[si][0];
+    document.getElementById('st-text').textContent = stories[si][1];
+    bars.forEach(function (b, j) { b.style.width = j < si ? '100%' : '0'; });
+  }
+  document.querySelector('.st-prev').addEventListener('click', function () { showStory(si - 1); });
+  document.querySelector('.st-next').addEventListener('click', function () { showStory(si + 1); });
+  showStory(0);
+  if (!still) {
+    setInterval(function () {
+      sp += 2;
+      bars[si].style.width = sp + '%';
+      if (sp >= 100) showStory(si + 1);
+    }, 60);
+  } else { bars[0].style.width = '100%'; }
+
+  // Шаги
+  var steps = [
+    ['Заявка', 'Оставляете город и примерный объём. Менеджер связывается и отвечает на вопросы.'],
+    ['Бокс образцов', '4 цвета у вас на столе. Повторяете тесты: кипяток, ключ, груз.'],
+    ['Договор', 'Фиксируем условия, цены и ваш город на карте дилеров.'],
+    ['Первая отгрузка', 'Доставка из Казани. От порога закупки бесплатно.']
+  ];
+  document.querySelectorAll('.stepper button').forEach(function (b, _, all) {
+    b.addEventListener('click', function () {
+      var i = +b.dataset.i;
+      all.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      document.getElementById('sp-t').textContent = steps[i][0];
+      document.getElementById('sp-d').textContent = steps[i][1];
+      document.getElementById('sp-bar').style.width = ((i + 1) * 25) + '%';
+    });
+  });
+})();
+</script>
+</body>
+</html>
