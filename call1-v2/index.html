@@ -423,8 +423,12 @@ footer { padding-block: 24px 56px; display: flex; justify-content: space-between
 ol.rows.qs li { grid-template-columns: 56px minmax(0, 1fr); }
 ol.rows.qs .t b { font-size: 1.25rem; }
 
-/* v2: тёплые нейтрали по референсам — дерево только в фото */
-:root { --panel: #F3EFE9; --panel-2: #E9E3DA; --rule: #E7E1D8; --rule-2: #DCD4C9; --grey: #6E6963; --soft: #A9A299; }
+/* v2: почти нейтральные фоны с едва заметным теплом — коричневый только в фото */
+:root { --panel: #F4F3F1; --panel-2: #EBEAE7; --rule: #E7E6E3; --rule-2: #DCDBD7; --grey: #6B6A68; --soft: #A7A6A3; }
+ol.rows .t em, .page-card ol li.idea-row b::after { color: var(--ink); background: var(--panel-2); }
+.wf-b.hl { background: var(--paper); color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); }
+.wf-b.hl b { color: var(--ink); }
+.ref-card em, .anim em { color: var(--ink); }
 
 /* Адаптив схем: ячейки не распирают колонку */
 .wf, .wf-row, .wf-b { min-width: 0; }
@@ -859,13 +863,13 @@ ol.rows.qs .t b { font-size: 1.25rem; }
       <div class="rp-text">
         <span class="cap">Палитра</span>
         <h3>Светлый интерфейс, дерево только в фото</h3>
-        <p class="sub">Белый и тёплый молочный фон, графитовый текст, чёрные кнопки. Коричневый не красим в интерфейс: он приходит из фотографий террас и дорогих оттенков самой доски.</p>
+        <p class="sub">Белый и светло-серый фон с едва заметным теплом, графитовый текст, чёрные кнопки. Коричневого в интерфейсе нет совсем, даже оттенком в фонах. Он появляется только на фотографиях террас и в дорогих оттенках самой доски.</p>
       </div>
       <div class="rp-row">
-        <div class="sw-card"><i style="background:#FFFFFF;box-shadow:inset 0 0 0 1px #E2DCD3"></i><b>Белый</b><span>фон</span></div>
-        <div class="sw-card"><i style="background:#F3EFE9"></i><b>Молочный</b><span>подложки</span></div>
-        <div class="sw-card"><i style="background:#DCD4C9"></i><b>Камень</b><span>линии, рамки</span></div>
-        <div class="sw-card"><i style="background:#1A1817"></i><b>Графит</b><span>текст, кнопки</span></div>
+        <div class="sw-card"><i style="background:#FFFFFF;box-shadow:inset 0 0 0 1px #DADAD8"></i><b>Белый</b><span>фон</span></div>
+        <div class="sw-card"><i style="background:#F4F3F1"></i><b>Светло-серый</b><span>подложки</span></div>
+        <div class="sw-card"><i style="background:#DCDBD7"></i><b>Серый</b><span>линии, рамки</span></div>
+        <div class="sw-card"><i style="background:#111111"></i><b>Графит</b><span>текст, кнопки</span></div>
       </div>
       <div class="rp-row wood">
         <div class="sw-card"><i class="wood-t" style="--c1:#7A5236;--c2:#684530"></i><b>Орех</b><span>только в фото</span></div>
