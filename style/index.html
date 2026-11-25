@@ -95,13 +95,13 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .sample span { color: var(--grey); font-size: 0.8125rem; }
 
 /* Оттенки дерева: мелкие чипы из референса */
-.wood-head { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: clamp(24px, 4vw, 80px); row-gap: 14px; align-items: end; }
+.wood-head { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: clamp(24px, 4vw, 80px); row-gap: 14px; align-items: start; }
 .wood-head h3 { white-space: nowrap; }
 .chips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 28px); }
-.chip { display: flex; gap: clamp(12px, 1.1vw, 18px); align-items: center; min-width: 0; }
+.chip { display: grid; gap: clamp(10px, 1vw, 16px); justify-items: start; min-width: 0; }
 .chip img { flex: none; width: clamp(80px, 9vw, 150px); height: clamp(80px, 9vw, 150px); object-fit: cover; border-radius: clamp(10px, 1vw, 14px); display: block; box-shadow: 0 16px 24px -14px rgba(0,0,0,.45), 0 1px 3px rgba(0,0,0,.08); transition: transform .5s var(--ease); }
 .chip:hover img { transform: translateY(-4px) rotate(-2deg); }
-.chip b { display: block; white-space: nowrap; font-size: var(--h4); font-weight: 500; letter-spacing: -.03em; line-height: 1.1; }
+.chip b { display: block; font-size: var(--h4); font-weight: 500; letter-spacing: -.03em; line-height: 1.1; }
 .chip span { display: block; margin-top: 6px; font-size: 0.8125rem; color: var(--grey); }
 .samples-cap { margin-top: clamp(28px, 3vw, 48px); margin-bottom: 12px; }
 
@@ -160,7 +160,9 @@ footer { padding-block: 24px 56px; display: flex; justify-content: space-between
   .samples { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .wood-head { grid-template-columns: 1fr; }
   .wood-head h3 { white-space: normal; }
-  .chips { grid-template-columns: 1fr; gap: 12px; }
+  .chips { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .chip img { width: 100%; height: auto; aspect-ratio: 1; }
+  .chip b { font-size: 1rem; }
   .crow { flex-direction: column; }
   .collage figure { flex: none; width: 100%; }
   .srow { grid-template-columns: 1fr; gap: 10px; }
