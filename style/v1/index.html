@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Стиль GRÜNDECK</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&display=swap">
+<style>
+/* Layout: стайлгайд в логике страницы стиля Кэмпа — монохромный лист, большие двухтоновые заголовки, колонка-подпись слева и примеры справа; цвет приносит только дерево. Один светлый вид намеренно. */
+:root {
+  --leaf: #FFFFFF;
+  --milk: #F6F5F3;
+  --stone: #ECEBE8;
+  --fog: #DAD8D4;
+  --grey: #8E8C88;
+  --graphite: #3B3A38;
+  --ink: #121211;
+  --r-lg: clamp(18px, 1.8vw, 26px);
+  --r-md: clamp(12px, 1.1vw, 16px);
+  --r-sm: 10px;
+  --pad: clamp(18px, 2.2vw, 40px);
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --font: "Manrope", "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { font-size: clamp(100%, 87% + 0.35vw, 130%); scroll-behavior: smooth; }
+body { background: var(--leaf); color: var(--ink); font-family: var(--font); font-size: 0.938rem; line-height: 1.55; letter-spacing: -.01em; }
+.page { max-width: 2400px; margin: 0 auto; padding-left: max(clamp(1rem, 0.4rem + 3.6vw, 5rem), env(safe-area-inset-left, 0px)); padding-right: max(clamp(1rem, 0.4rem + 3.6vw, 5rem), env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { margin: 0; font-weight: 500; text-wrap: balance; }
+h2 { font-size: clamp(2.2rem, 1.2rem + 3vw, 4.4rem); line-height: .95; letter-spacing: -.06em; }
+h2 span, h1 span { color: var(--grey); font-weight: 400; }
+p { margin: 0; max-width: 62ch; }
+.sub { color: var(--grey); }
+.cap { font-size: 0.75rem; font-weight: 500; color: var(--grey); letter-spacing: -.01em; }
+
+/* Шапка */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: rgba(255,255,255,.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--stone); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 21; background: var(--leaf); }
+.top-in { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+.logo { display: grid; gap: 2px; line-height: 1; }
+.logo b { font-weight: 600; letter-spacing: -.05em; font-size: 1.05rem; }
+.logo span { font-size: 0.688rem; color: var(--grey); }
+.nav { display: flex; gap: clamp(12px, 1.6vw, 26px); font-size: 0.812rem; flex-wrap: wrap; justify-content: flex-end; }
+.nav a { color: var(--grey); text-decoration: none; transition: color .2s ease; }
+.nav a:hover, .nav a:focus-visible { color: var(--ink); }
+
+/* Первый экран */
+.hero { padding-block: clamp(48px, 7vw, 130px) clamp(32px, 4vw, 64px); display: grid; gap: clamp(20px, 2vw, 32px); justify-items: center; text-align: center; }
+.hero h1 { font-size: clamp(2.6rem, 1.3rem + 5vw, 6.4rem); line-height: .92; letter-spacing: -.07em; max-width: 14ch; }
+.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; width: min(100%, 860px); text-align: left; margin-top: 8px; }
+.facts > div { border-top: 1px solid var(--ink); padding-top: 10px; display: grid; gap: 4px; }
+.facts b { font-weight: 500; font-size: 1.25rem; letter-spacing: -.04em; }
+.strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(8px, 1vw, 16px); padding-bottom: clamp(48px, 6vw, 110px); }
+.strip figure { margin: 0; display: grid; gap: 8px; }
+.strip img { width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; border-radius: var(--r-md); display: block; }
+.strip figure:nth-child(even) { transform: translateY(clamp(12px, 2vw, 36px)); }
+
+/* Секции */
+.sec { padding-block: clamp(56px, 6vw, 130px); border-top: 1px solid var(--stone); display: grid; gap: clamp(24px, 2.4vw, 44px); scroll-margin-top: 60px; }
+.sec-head { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 60px); align-items: end; }
+.sec-head p { color: var(--grey); }
+.sec-head p b { color: var(--ink); font-weight: 600; }
+
+/* Палитра */
+.swatches { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); border-radius: var(--r-lg); overflow: hidden; box-shadow: inset 0 0 0 1px var(--stone); }
+.sw { min-height: clamp(220px, 26vw, 420px); padding: clamp(12px, 1.2vw, 20px); display: flex; flex-direction: column; justify-content: space-between; gap: 12px; min-width: 0; }
+.sw b { font-weight: 500; font-size: 1rem; letter-spacing: -.03em; }
+.sw span { font-size: 0.719rem; line-height: 1.4; display: block; }
+.sw .hex { font-variant-numeric: tabular-nums; opacity: .7; }
+.sw.dark { color: var(--leaf); }
+.wood { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(10px, 1vw, 16px); }
+.wood figure { margin: 0; background: var(--milk); border-radius: var(--r-md); overflow: hidden; display: grid; }
+.wood img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+.wood figcaption { padding: 12px 14px 14px; display: grid; gap: 3px; }
+.wood figcaption b { font-weight: 600; letter-spacing: -.02em; display: flex; align-items: center; gap: 8px; }
+.wood figcaption i { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.wood figcaption span { color: var(--grey); font-size: 0.812rem; }
+.rule { display: flex; gap: 10px 24px; flex-wrap: wrap; font-size: 0.844rem; }
+.rule span { display: inline-flex; align-items: center; gap: 8px; }
+.rule span::before { content: ""; width: 18px; height: 18px; border-radius: 50%; flex: none; background: var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M5 9.2l2.6 2.6L13 6.4' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 18px no-repeat; }
+.rule span.no::before { background: var(--fog) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M6 6l6 6M12 6l-6 6' fill='none' stroke='%23121211' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") center / 18px no-repeat; }
+
+/* Шрифт */
+.type-rows { border-top: 1px solid var(--ink); }
+.type-row { display: grid; grid-template-columns: minmax(150px, 0.32fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 60px); padding-block: clamp(16px, 1.8vw, 30px); border-bottom: 1px solid var(--stone); align-items: baseline; }
+.type-row .meta { display: grid; gap: 2px; }
+.type-row .meta b { font-weight: 600; font-size: 0.812rem; }
+.type-row .meta span { color: var(--grey); font-size: 0.719rem; font-variant-numeric: tabular-nums; }
+.t-hero { font-size: clamp(2.4rem, 1.2rem + 4vw, 5.6rem); line-height: .92; letter-spacing: -.07em; font-weight: 500; }
+.t-h2 { font-size: clamp(1.9rem, 1.1rem + 2.4vw, 3.6rem); line-height: .96; letter-spacing: -.06em; font-weight: 500; }
+.t-h3 { font-size: clamp(1.3rem, 1rem + 0.8vw, 1.8rem); line-height: 1.15; letter-spacing: -.04em; font-weight: 500; }
+.t-body { font-size: 1rem; line-height: 1.55; max-width: 56ch; }
+.t-cap { font-size: 0.75rem; color: var(--grey); font-weight: 500; }
+.t-num { font-size: clamp(2.4rem, 1.4rem + 3vw, 4.6rem); line-height: 1; letter-spacing: -.06em; font-weight: 400; font-variant-numeric: tabular-nums; }
+.t-hero span, .t-h2 span { color: var(--grey); font-weight: 400; }
+
+/* Фото */
+.photo-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto auto; gap: clamp(8px, 1vw, 16px); }
+.photo-grid figure { margin: 0; position: relative; border-radius: var(--r-md); overflow: hidden; background: var(--milk); }
+.photo-grid img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo-grid .big { grid-row: span 2; }
+.photo-grid .prod img { object-fit: contain; padding: clamp(16px, 2vw, 36px); filter: drop-shadow(0 24px 30px rgba(0,0,0,.14)); aspect-ratio: 4 / 3; height: auto; }
+.photo-grid figcaption { position: absolute; left: 10px; bottom: 10px; font-size: 0.719rem; font-weight: 500; background: rgba(255,255,255,.9); padding: 4px 10px; border-radius: 999px; }
+.do-dont { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px, 1vw, 16px); }
+.dd { background: var(--milk); border-radius: var(--r-md); padding: var(--pad); display: grid; gap: 12px; align-content: start; }
+.dd ul { margin: 0; padding: 0; list-style: none; display: grid; }
+.dd li { padding: 9px 0; border-top: 1px solid var(--fog); font-size: 0.906rem; }
+.dd li:first-child { border-top: 0; }
+.note { background: var(--milk); border-radius: var(--r-md); padding: 14px 18px; font-size: 0.875rem; color: var(--grey); max-width: none; }
+.note b { color: var(--ink); font-weight: 600; }
+
+/* Элементы */
+.el-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(10px, 1vw, 16px); }
+.el { background: var(--milk); border-radius: var(--r-lg); padding: var(--pad); display: grid; gap: 16px; align-content: start; min-width: 0; }
+.el > .cap { margin-bottom: 4px; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.btn { font: inherit; font-size: 0.875rem; font-weight: 500; border: 0; cursor: pointer; display: inline-flex; align-items: center; gap: 0; text-decoration: none; }
+.btn-pair { display: inline-flex; gap: 4px; }
+.btn-pair .l { background: var(--ink); color: var(--leaf); border-radius: 999px; padding: 0 24px; height: 46px; display: grid; place-items: center; transition: background .25s var(--ease); }
+.btn-pair .r { background: var(--ink); color: var(--leaf); border-radius: 999px; width: 56px; height: 46px; display: grid; place-items: center; transition: transform .25s var(--ease); }
+.btn-pair:hover .r { transform: translateX(3px); }
+.btn-pair:hover .l { background: var(--graphite); }
+.btn-out { border: 1px solid var(--ink); background: transparent; color: var(--ink); border-radius: 999px; padding: 0 22px; height: 46px; transition: background .25s var(--ease), color .25s ease; }
+.btn-out:hover { background: var(--ink); color: var(--leaf); }
+.btn-link { background: none; color: var(--ink); border-bottom: 1px solid currentColor; padding: 0 0 3px; border-radius: 0; }
+.btn:focus-visible, .seg button:focus-visible, .cs button:focus-visible, .field input:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.tag { font-size: 0.75rem; font-weight: 600; padding: 5px 12px; border-radius: 999px; background: var(--leaf); }
+.tag.dark { background: var(--ink); color: var(--leaf); }
+.num { display: inline-grid; place-items: center; width: 40px; height: 25px; border: 1px solid rgba(18,18,17,.4); border-radius: 999px; font-size: 0.688rem; font-weight: 500; }
+.status { display: inline-flex; align-items: center; gap: 7px; font-size: 0.812rem; }
+.status i { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid var(--ink); }
+.status.busy i { background: var(--ink); }
+.seg { display: inline-grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; background: var(--leaf); border-radius: 999px; }
+.seg button { font: inherit; font-size: 0.812rem; font-weight: 500; border: 0; border-radius: 999px; padding: 9px 16px; background: transparent; color: var(--ink); cursor: pointer; transition: background .25s var(--ease), color .25s ease; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--leaf); }
+.cs { display: flex; gap: 10px; }
+.cs button { width: 44px; height: 44px; border-radius: 50%; border: 3px solid var(--milk); box-shadow: 0 0 0 1px var(--fog); background-size: cover; background-position: center; cursor: pointer; padding: 0; transition: box-shadow .25s var(--ease), transform .25s var(--ease); }
+.cs button:hover { transform: translateY(-2px); }
+.cs button[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--ink); }
+.cs-name { font-size: 0.844rem; }
+.field { display: grid; gap: 6px; }
+.field label { font-size: 0.75rem; color: var(--grey); font-weight: 500; }
+.field input { font: inherit; font-size: 0.938rem; height: 48px; border: 1px solid var(--fog); border-radius: var(--r-sm); background: var(--leaf); color: var(--ink); padding: 0 14px; }
+.check { display: flex; gap: 10px; align-items: flex-start; font-size: 0.812rem; color: var(--grey); }
+.check input { width: 18px; height: 18px; margin: 1px 0 0; accent-color: var(--ink); }
+.pcard { background: var(--leaf); border-radius: var(--r-md); overflow: hidden; display: grid; }
+.pcard .ph { background: var(--milk); aspect-ratio: 4 / 3; display: grid; place-items: center; padding: 18px; margin: 8px; border-radius: var(--r-sm); }
+.pcard .ph img { max-width: 100%; max-height: 100%; height: auto; filter: drop-shadow(0 18px 22px rgba(0,0,0,.14)); }
+.pcard .body { padding: 6px 14px 14px; display: grid; gap: 4px; }
+.pcard b { font-weight: 600; letter-spacing: -.02em; }
+.pcard span { color: var(--grey); font-size: 0.812rem; }
+.stat { display: grid; gap: 2px; }
+.stat b { font-weight: 400; font-size: clamp(2.2rem, 1.4rem + 2.4vw, 3.6rem); letter-spacing: -.06em; line-height: 1; font-variant-numeric: tabular-nums; }
+.radii { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.radii div { background: var(--leaf); aspect-ratio: 1; display: grid; place-items: end start; padding: 10px; font-size: 0.719rem; color: var(--grey); box-shadow: inset 0 0 0 1px var(--fog); }
+
+/* Движение */
+.motion { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(10px, 1vw, 16px); }
+.motion figure { margin: 0; background: var(--milk); border-radius: var(--r-md); overflow: hidden; display: grid; align-content: start; }
+.motion video { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; display: block; background: var(--stone); }
+.motion figcaption { padding: 12px 14px 14px; display: grid; gap: 3px; }
+.motion figcaption b { font-weight: 600; letter-spacing: -.02em; }
+.motion figcaption span { color: var(--grey); font-size: 0.812rem; }
+.motion-rules { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(10px, 1vw, 16px); }
+.motion-rules div { border-top: 1px solid var(--ink); padding-top: 10px; display: grid; gap: 4px; }
+.motion-rules b { font-weight: 500; font-size: 1.1rem; letter-spacing: -.03em; }
+.motion-rules span { color: var(--grey); font-size: 0.844rem; }
+
+/* Правила */
+.checklist { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0 clamp(16px, 3vw, 60px); border-top: 1px solid var(--ink); }
+.checklist li { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 12px; padding-block: 14px; border-bottom: 1px solid var(--stone); align-items: start; }
+.checklist li .num { margin-top: 1px; }
+footer { padding-block: 24px 56px; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; border-top: 1px solid var(--stone); }
+
+/* Появление: элемент виден сразу, движение только как украшение */
+@media (prefers-reduced-motion: no-preference) {
+  .in { animation: rise .8s var(--ease) both; }
+  @keyframes rise { from { transform: translateY(18px); } to { transform: none; } }
+}
+
+@media (max-width: 1100px) {
+  .swatches { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .el-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .motion { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .nav { display: none; }
+}
+@media (max-width: 760px) {
+  .sec-head, .do-dont, .checklist, .motion-rules { grid-template-columns: 1fr; }
+  .facts { grid-template-columns: 1fr; }
+  .strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .swatches { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sw { min-height: 150px; }
+  .wood { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .type-row { grid-template-columns: 1fr; gap: 8px; }
+  .photo-grid { grid-template-columns: 1fr 1fr; }
+  .photo-grid .big { grid-column: span 2; grid-row: auto; }
+  .el-grid, .motion { grid-template-columns: 1fr; }
+}
+@media (min-width: 1920px) {
+  .motion { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+</style>
+</head>
+<body>
+
+
+<header class="top">
+  <div class="page top-in">
+    <div class="logo"><b>GRÜNDECK</b><span>Дизайн-система сайта</span></div>
+    <nav class="nav" aria-label="Разделы">
+      <a href="#color">Цвет</a><a href="#type">Шрифт</a><a href="#photo">Фото</a><a href="#elements">Элементы</a><a href="#motion">Движение</a><a href="#rules">Правила</a>
+    </nav>
+  </div>
+</header>
+
+<main class="page">
+
+  <section class="hero">
+    <span class="cap">GRÜNDECK · стиль сайта 2026</span>
+    <h1 class="in">Как выглядит GRÜNDECK <span>на сайте и в материалах</span></h1>
+    <div class="facts">
+      <div><span class="cap">Шрифт</span><b>Manrope</b></div>
+      <div><span class="cap">Оттенки</span><b>7 нейтральных</b></div>
+      <div><span class="cap">Цвет</span><b>только в дереве</b></div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <figure><img src="../media/walnut-2.jpg" alt="Терраса GRÜNDECK в цвете Орех" width="960" height="1280"><span class="cap">Орех</span></figure>
+    <figure><img src="../media/chocolate-2.jpg" alt="Терраса GRÜNDECK в цвете Шоколад" width="960" height="1280"><span class="cap">Шоколад</span></figure>
+    <figure><img src="../media/graphite-1.jpg" alt="Крыльцо GRÜNDECK в цвете Графит" width="960" height="1280"><span class="cap">Графит</span></figure>
+    <figure><img src="../media/ash-1.jpg" alt="Настил GRÜNDECK в цвете Пепел" width="960" height="1280"><span class="cap">Пепел</span></figure>
+  </div>
+
+  <!-- Цвет -->
+  <section class="sec" id="color">
+    <div class="sec-head">
+      <h2>Мы почти монохромны <span>цвет приносит дерево</span></h2>
+      <p><b>Семь нейтральных оттенков</b> держат весь интерфейс: фон, карточки, линии, текст и кнопки. Тёплые тона появляются только там, где есть сама доска.</p>
+    </div>
+    <div class="swatches">
+      <div class="sw" style="background:#FFFFFF"><b>Лист</b><div><span class="hex">#FFFFFF</span><span>фон страниц</span></div></div>
+      <div class="sw" style="background:#F6F5F3"><b>Молоко</b><div><span class="hex">#F6F5F3</span><span>подложки и карточки</span></div></div>
+      <div class="sw" style="background:#ECEBE8"><b>Камень</b><div><span class="hex">#ECEBE8</span><span>плашки и поля</span></div></div>
+      <div class="sw" style="background:#DAD8D4"><b>Туман</b><div><span class="hex">#DAD8D4</span><span>линии и рамки</span></div></div>
+      <div class="sw dark" style="background:#8E8C88"><b>Серый</b><div><span class="hex">#8E8C88</span><span>второй тон заголовков, подписи</span></div></div>
+      <div class="sw dark" style="background:#3B3A38"><b>Графит</b><div><span class="hex">#3B3A38</span><span>тёмные блоки, наведение</span></div></div>
+      <div class="sw dark" style="background:#121211"><b>Чернила</b><div><span class="hex">#121211</span><span>текст и кнопки</span></div></div>
+    </div>
+
+    <div class="sec-head">
+      <h3 class="t-h3">Коричневый живёт в фото и продукте</h3>
+      <p class="sub">Цвета доски показываем фотографией, а не заливкой. В интерфейсе они появляются только в элементах продукта: выбор цвета, образцы, карточки каталога, 3D-доска.</p>
+    </div>
+    <div class="wood">
+      <figure><img src="../media/walnut-1.jpg" alt="Орех" width="1280" height="960" loading="lazy"><figcaption><b><i style="background:#8B6A4E"></i>Орех</b><span>тёплый средний коричневый</span></figcaption></figure>
+      <figure><img src="../media/chocolate-1.jpg" alt="Шоколад" width="1280" height="960" loading="lazy"><figcaption><b><i style="background:#5E4636"></i>Шоколад</b><span>глубокий тёмно-коричневый</span></figcaption></figure>
+      <figure><img src="../media/graphite-2.jpg" alt="Графит" width="960" height="1280" loading="lazy"><figcaption><b><i style="background:#5B5A58"></i>Графит</b><span>тёмно-серый</span></figcaption></figure>
+      <figure><img src="../media/ash-2.jpg" alt="Пепел" width="1280" height="960" loading="lazy"><figcaption><b><i style="background:#A9A69F"></i>Пепел</b><span>светлый серый</span></figcaption></figure>
+    </div>
+    <div class="rule">
+      <span>Дерево в фото, образцах и выборе цвета</span>
+      <span class="no">Дерево в фонах, тексте и кнопках</span>
+      <span class="no">Тёплая тонировка всей страницы</span>
+    </div>
+  </section>
+
+  <!-- Шрифт -->
+  <section class="sec" id="type">
+    <div class="sec-head">
+      <h2>Один шрифт <span>лёгкий и плотный</span></h2>
+      <p><b>Manrope, вес 400 и 500.</b> Крупные заголовки с плотным трекингом, вторая половина фразы серым. Цифры обычным весом, чтобы читались как данные.</p>
+    </div>
+    <div class="type-rows">
+      <div class="type-row"><div class="meta"><b>Заголовок героя</b><span>500 · −0,07em · 64–104 px</span></div><div class="t-hero">Террасная доска второго поколения <span>для вашего бизнеса</span></div></div>
+      <div class="type-row"><div class="meta"><b>Заголовок секции</b><span>500 · −0,06em · 36–60 px</span></div><div class="t-h2">Займите свой город <span>первым</span></div></div>
+      <div class="type-row"><div class="meta"><b>Заголовок карточки</b><span>500 · −0,04em · 20–28 px</span></div><div class="t-h3">Бесплатная доставка от порога</div></div>
+      <div class="type-row"><div class="meta"><b>Текст</b><span>400 · −0,01em · 15–18 px · 1,55</span></div><p class="t-body">Доска GRÜNDECK сделана по технологии Co-Extrusion: древесно-полимерное ядро закрыто полимерной оболочкой. Она держит цвет и не требует масла.</p></div>
+      <div class="type-row"><div class="meta"><b>Цифры</b><span>400 · −0,06em · табличные</span></div><div class="t-num">50 000+ м²</div></div>
+      <div class="type-row"><div class="meta"><b>Подпись</b><span>500 · 12 px · Серый</span></div><div class="t-cap">Профиль 22 × 142 мм · длина 3 и 4 м</div></div>
+    </div>
+  </section>
+
+  <!-- Фото -->
+  <section class="sec" id="photo">
+    <div class="sec-head">
+      <h2>Фото <span>дерево, свет и фактура</span></h2>
+      <p><b>Реальные объекты при дневном свете.</b> Ракурс вдоль досок, чтобы читалась фактура. Продукт отдельно — на Молоке с мягкой тенью, как в каталогах мебели.</p>
+    </div>
+    <div class="photo-grid">
+      <figure class="big"><img src="../media/walnut-2.jpg" alt="Настил Орех вдоль досок" width="960" height="1280" loading="lazy"><figcaption>Объект: ракурс вдоль досок</figcaption></figure>
+      <figure class="prod"><img src="../media/board-ash.png" alt="Профиль доски" width="1000" height="641" loading="lazy"><figcaption>Продукт: доска</figcaption></figure>
+      <figure class="prod"><img src="../media/edge.png" alt="Завершающая доска" width="818" height="516" loading="lazy"><figcaption>Продукт: завершающая</figcaption></figure>
+      <figure><img src="../media/chocolate-1.jpg" alt="Терраса Шоколад" width="1280" height="960" loading="lazy"><figcaption>Объект: терраса</figcaption></figure>
+      <figure class="prod"><img src="../media/clip-transparent.png" alt="Кляймеры" width="1419" height="1108" loading="lazy"><figcaption>Продукт: крепёж</figcaption></figure>
+    </div>
+    <div class="do-dont">
+      <div class="dd"><span class="cap">Делаем</span><ul><li>Дневной свет, ровный горизонт</li><li>Ракурс вдоль досок, видна фактура</li><li>Один герой в кадре: настил, крыльцо, зона у бассейна</li><li>Продукт на светлом фоне с мягкой тенью</li></ul></div>
+      <div class="dd"><span class="cap">Не делаем</span><ul><li>Фильтры и тёплая тонировка</li><li>Стоковые террасы чужих брендов</li><li>Перекошенный горизонт и случайный мусор в кадре</li><li>Текст поверх фактуры доски</li></ul></div>
+    </div>
+    <p class="note"><b>Сейчас фото сняты на телефон.</b> Для сайта нужна съёмка 4 цветов на объектах и продукта на светлом фоне. Список кадров подготовлю к этапу дизайна.</p>
+  </section>
+
+  <!-- Элементы -->
+  <section class="sec" id="elements">
+    <div class="sec-head">
+      <h2>Элементы сайта <span>одни и те же везде</span></h2>
+      <p>Чёрные кнопки-пилюли, светлые карточки со скруглением, номера в контурных пилюлях. Всё ниже можно нажать.</p>
+    </div>
+    <div class="el-grid">
+      <div class="el">
+        <span class="cap">Кнопки</span>
+        <div class="row"><a class="btn btn-pair" href="#elements"><span class="l">Стать дилером</span><span class="r" aria-hidden="true">→</span></a></div>
+        <div class="row"><button class="btn btn-out" type="button">Получить образцы</button><a class="btn btn-link" href="#elements">Смотреть каталог</a></div>
+      </div>
+      <div class="el">
+        <span class="cap">Метки и статусы</span>
+        <div class="row"><span class="num">01</span><span class="tag">Идея</span><span class="tag dark">Рекомендую</span></div>
+        <div class="row"><span class="status"><i></i>Свободно</span><span class="status busy"><i></i>Есть партнёр</span></div>
+      </div>
+      <div class="el">
+        <span class="cap">Переключатель</span>
+        <div class="seg" role="group" aria-label="Поколение"><button type="button" aria-pressed="true">2-е поколение</button><button type="button" aria-pressed="false">1-е поколение</button></div>
+        <span class="sub" style="font-size:.812rem">Чёрный — выбранный вариант</span>
+      </div>
+      <div class="el">
+        <span class="cap">Выбор цвета · дерево допустимо</span>
+        <div class="cs" role="group" aria-label="Цвет доски">
+          <button type="button" aria-pressed="true" aria-label="Орех" data-n="Орех" style="background-image:url(../media/walnut-1.jpg)"></button>
+          <button type="button" aria-pressed="false" aria-label="Шоколад" data-n="Шоколад" style="background-image:url(../media/chocolate-1.jpg)"></button>
+          <button type="button" aria-pressed="false" aria-label="Графит" data-n="Графит" style="background-image:url(../media/graphite-2.jpg)"></button>
+          <button type="button" aria-pressed="false" aria-label="Пепел" data-n="Пепел" style="background-image:url(../media/ash-2.jpg)"></button>
+        </div>
+        <span class="cs-name" id="cs-name">Орех</span>
+      </div>
+      <div class="el">
+        <span class="cap">Карточка каталога</span>
+        <div class="pcard"><div class="ph"><img src="../media/board-ash.png" alt="Террасная доска" width="1000" height="641" loading="lazy"></div><div class="body"><b>Террасная доска Пепел</b><span>Co-Extrusion · 22 × 142 мм · 3 и 4 м</span></div></div>
+        <div class="row"><button class="btn btn-out" type="button">Запросить условия</button></div>
+      </div>
+      <div class="el">
+        <span class="cap">Поле и согласие</span>
+        <div class="field"><label for="f-city">Город</label><input id="f-city" type="text" placeholder="Казань"></div>
+        <label class="check" for="f-ok"><input id="f-ok" type="checkbox" checked>Согласен на обработку персональных данных</label>
+      </div>
+      <div class="el">
+        <span class="cap">Цифры</span>
+        <div class="stat"><b>8 лет</b><span class="sub">на рынке ДПК</span></div>
+        <div class="stat"><b>5 000+ м²</b><span class="sub">на складе в Казани</span></div>
+      </div>
+      <div class="el">
+        <span class="cap">Скругления</span>
+        <div class="radii"><div style="border-radius:26px">26 · блоки</div><div style="border-radius:16px">16 · карточки</div><div style="border-radius:10px">10 · поля</div><div style="border-radius:999px;place-items:center;text-align:center">пилюля</div></div>
+      </div>
+      <div class="el" style="background:var(--ink);color:var(--leaf)">
+        <span class="cap" style="color:#A8A6A1">Тёмный блок</span>
+        <b style="font-weight:500;font-size:1.6rem;letter-spacing:-.05em;line-height:1.05">Итог, пакет, призыв к действию</b>
+        <span style="color:#A8A6A1;font-size:.844rem">Графит или Чернила, один такой блок на экран</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Движение -->
+  <section class="sec" id="motion">
+    <div class="sec-head">
+      <h2>Движение <span>спокойное, по делу</span></h2>
+      <p><b>Анимация объясняет продукт,</b> а не украшает. Ниже приёмы из референсов и блок сайта, куда каждый пойдёт.</p>
+    </div>
+    <div class="motion">
+      <figure><video src="../media/croptab_drop.mp4" poster="../media/croptab_drop.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Продукт падает в воду"></video><figcaption><b>Падение в воду</b><span>→ тест на прочность</span></figcaption></figure>
+      <figure><video src="../media/katana.mp4" poster="../media/katana.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Поворот предмета при скролле"></video><figcaption><b>Поворот при скролле</b><span>→ доска в разрезе</span></figcaption></figure>
+      <figure><video src="../media/odometer.mp4" poster="../media/odometer.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Счётчик-одометр"></video><figcaption><b>Счётчик-одометр</b><span>→ цифры доверия</span></figcaption></figure>
+      <figure><video src="../media/kitchen.mp4" poster="../media/kitchen.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Товар на светлом фоне"></video><figcaption><b>Товар на светлом фоне</b><span>→ каталог и образцы</span></figcaption></figure>
+    </div>
+    <div class="motion-rules">
+      <div><b>Появление снизу</b><span>Сдвиг 18–24 px, 0,6–0,8 с, мягкое торможение. Один раз, без повторов.</span></div>
+      <div><b>Наведение</b><span>Кнопка темнеет, стрелка сдвигается на 3 px. Без вспышек и прыжков.</span></div>
+      <div><b>Без лишнего</b><span>Бесконечно крутятся только ролики теста. Для тех, кто отключил анимацию, всё статично.</span></div>
+    </div>
+  </section>
+
+  <!-- Правила -->
+  <section class="sec" id="rules">
+    <div class="sec-head">
+      <h2>Правила <span>перед тем как сдать</span></h2>
+      <p>Проверка для дизайнера, верстальщика и всех, кто готовит материалы GRÜNDECK.</p>
+    </div>
+    <ol class="checklist">
+      <li><span class="num">01</span><span>В фонах, тексте и кнопках нет коричневого, он есть только в фото и элементах продукта</span></li>
+      <li><span class="num">02</span><span>Один шрифт Manrope, веса 400 и 500</span></li>
+      <li><span class="num">03</span><span>Вторая половина заголовка — Серым</span></li>
+      <li><span class="num">04</span><span>Главная кнопка — чёрная пилюля, одна на экран</span></li>
+      <li><span class="num">05</span><span>Фото реальные: свой объект, дневной свет, ровный горизонт</span></li>
+      <li><span class="num">06</span><span>Название бренда пишется GRÜNDECK, с Ü</span></li>
+      <li><span class="num">07</span><span>Цифры только подтверждённые клиентом, условные подписаны</span></li>
+      <li><span class="num">08</span><span>Проверено на 390, 768, 1366, 1440 и 2560 px</span></li>
+    </ol>
+  </section>
+
+</main>
+
+<footer class="page"><span class="cap">GRÜNDECK · дизайн-система сайта</span><span class="cap">Подготовила Элианора</span></footer>
+
+<script>
+(function () {
+  document.querySelectorAll('.seg').forEach(function (g) {
+    var bs = g.querySelectorAll('button');
+    bs.forEach(function (b) { b.addEventListener('click', function () { bs.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); }); });
+  });
+  var name = document.getElementById('cs-name');
+  document.querySelectorAll('.cs button').forEach(function (b, _, all) {
+    b.addEventListener('click', function () { all.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); name.textContent = b.dataset.n; });
+  });
+  document.querySelectorAll('video').forEach(function (v) { v.muted = true; var p = v.play(); if (p && p.catch) p.catch(function () {}); });
+})();
+</script>
+</body>
+</html>
