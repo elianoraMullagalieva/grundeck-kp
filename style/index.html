@@ -94,14 +94,28 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .sample b { font-weight: 500; font-size: var(--h4); letter-spacing: -.03em; line-height: 1.1; }
 .sample span { color: var(--grey); font-size: 0.8125rem; }
 
+/* Два акцента: лён и олива */
+.accents { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(8px, 1vw, 16px); margin-top: clamp(-20px, -1.4vw, -8px); }
+.acc { background: var(--bg); color: var(--fg, var(--ink)); border-radius: var(--r-lg); padding: clamp(16px, 1.6vw, 28px); min-height: clamp(220px, 20vw, 360px); display: flex; flex-direction: column; justify-content: space-between; gap: 20px; transition: transform .5s var(--ease); }
+.acc:hover { transform: translateY(-4px); }
+.acc .cap { color: inherit; opacity: .6; }
+.acc b { display: block; margin-top: 6px; font-size: var(--h3); font-weight: 500; letter-spacing: -.035em; line-height: 1.05; }
+.acc .hex { display: block; font-size: var(--h4); font-weight: 500; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.acc p { margin-top: 8px; font-size: 0.875rem; line-height: 1.45; opacity: .8; max-width: 34ch; }
+.pairs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto 1fr 1fr; gap: clamp(8px, 1vw, 16px); }
+.pairs .cap { grid-column: 1 / -1; }
+.pair { border-radius: var(--r-md); padding: clamp(12px, 1.2vw, 18px); display: flex; flex-direction: column; justify-content: space-between; gap: 10px; min-height: 110px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.05); }
+.pair b { font-size: var(--h3); font-weight: 500; letter-spacing: -.035em; line-height: 1; }
+.pair span { font-size: 0.75rem; font-weight: 500; }
+
 /* Оттенки дерева: мелкие чипы из референса */
 .wood-head { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: clamp(24px, 4vw, 80px); row-gap: 14px; align-items: start; }
 .wood-head h3 { white-space: nowrap; }
-.chips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 28px); }
+.chips { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 28px); }
 .chip { display: grid; gap: clamp(10px, 1vw, 16px); justify-items: start; min-width: 0; }
-.chip img { flex: none; width: clamp(80px, 9vw, 150px); height: clamp(80px, 9vw, 150px); object-fit: cover; border-radius: clamp(10px, 1vw, 14px); display: block; box-shadow: 0 16px 24px -14px rgba(0,0,0,.45), 0 1px 3px rgba(0,0,0,.08); transition: transform .5s var(--ease); }
+.chip img { flex: none; width: clamp(80px, 8.4vw, 150px); height: clamp(80px, 8.4vw, 150px); object-fit: cover; border-radius: clamp(10px, 1vw, 14px); display: block; box-shadow: 0 16px 24px -14px rgba(0,0,0,.45), 0 1px 3px rgba(0,0,0,.08); transition: transform .5s var(--ease); }
 .chip:hover img { transform: translateY(-4px) rotate(-2deg); }
-.chip b { display: block; font-size: var(--h4); font-weight: 500; letter-spacing: -.03em; line-height: 1.1; }
+.chip b { display: block; font-size: var(--tm); font-weight: 500; letter-spacing: -.03em; line-height: 1.1; }
 .chip span { display: block; margin-top: 6px; font-size: 0.8125rem; color: var(--grey); }
 .samples-cap { margin-top: clamp(28px, 3vw, 48px); margin-bottom: 12px; }
 
@@ -160,7 +174,9 @@ footer { padding-block: 24px 56px; display: flex; justify-content: space-between
   .samples { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .wood-head { grid-template-columns: 1fr; }
   .wood-head h3 { white-space: normal; }
-  .chips { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .chips { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 12px; }
+  .accents { grid-template-columns: 1fr; margin-top: 0; }
+  .acc { min-height: 200px; }
   .chip img { width: 100%; height: auto; aspect-ratio: 1; }
   .chip b { font-size: 1rem; }
   .crow { flex-direction: column; }
@@ -185,7 +201,7 @@ footer { padding-block: 24px 56px; display: flex; justify-content: space-between
     <h1>Цвет и шрифт <span>GRÜNDECK</span></h1>
     <div class="facts">
       <div><span class="cap">Шрифт</span><b>Medeo Sans</b></div>
-      <div><span class="cap">Интерфейс</span><b>7 нейтральных</b></div>
+      <div><span class="cap">Интерфейс</span><b>7 нейтральных + лён и олива</b></div>
       <div><span class="cap">Дерево</span><b>только в фото</b></div>
     </div>
   </section>
@@ -201,7 +217,7 @@ footer { padding-block: 24px 56px; display: flex; justify-content: space-between
   <section class="sec" id="color">
     <div class="sec-head">
       <h2>Мы почти монохромны <span>цвет приносит дерево</span></h2>
-      <p><b>Семь нейтральных оттенков</b> держат весь интерфейс: фон, карточки, линии, текст и кнопки. Тёплые тона появляются только там, где есть сама доска.</p>
+      <p><b>Семь нейтральных оттенков</b> держат весь интерфейс: фон, карточки, линии, текст и кнопки. Два тихих акцента, лён и олива, добавляют тепло точечно. Насыщенные тона дерева живут только в фото.</p>
     </div>
     <div class="swatches">
       <div class="sw" style="background:#FFFFFF"><b>Лист</b><div><span class="hex">#FFFFFF</span><span>фон страниц</span></div></div>
@@ -213,9 +229,28 @@ footer { padding-block: 24px 56px; display: flex; justify-content: space-between
       <div class="sw dark" style="background:#121212"><b>Чернила</b><div><span class="hex">#121212</span><span>текст и кнопки</span></div></div>
     </div>
 
+    <div class="accents">
+      <div class="acc" style="--bg:#E6E1D8">
+        <div><span class="cap">Акцент 1 · тёплый, но не жёлтый</span><b>Лён</b></div>
+        <div><span class="hex">#E6E1D8</span><p>Крупные тёплые подложки: блок образцов, карточка дилера, форма заявки. Фоном всей страницы не становится.</p></div>
+      </div>
+      <div class="acc" style="--bg:#6B7050;--fg:#F5F3EE">
+        <div><span class="cap">Акцент 2 · олива из lano, светлее</span><b>Олива</b></div>
+        <div><span class="hex">#6B7050</span><p>Точечно: метка «в наличии», город на карте дилеров, иконки, активная вкладка. Кнопки остаются чёрными.</p></div>
+      </div>
+      <div class="pairs">
+        <span class="cap">Сочетания, которые работают</span>
+        <div class="pair" style="background:#E6E1D8;color:#121212"><b>Аа</b><span>Лён + Чернила</span></div>
+        <div class="pair" style="background:#6B7050;color:#E6E1D8"><b>Аа</b><span>Олива + Лён</span></div>
+        <div class="pair" style="background:#F5F5F4;color:#6B7050"><b>Аа</b><span>Молоко + Олива</span></div>
+        <div class="pair" style="background:#121212;color:#E6E1D8"><b>Аа</b><span>Чернила + Лён</span></div>
+      </div>
+    </div>
+
     <div class="sub-head wood-head">
-      <h3>Оттенки дерева<br><span>живут только в картинках</span></h3>
+      <h3>Оттенки дерева и зелёный<br><span>живут только в картинках</span></h3>
       <div class="chips">
+        <div class="chip"><img src="media/ref-lano-olive.jpg" alt="Оттенок Олива" width="276" height="276" loading="lazy"><div><b>Олива</b><span>≈ #646A4A</span></div></div>
         <div class="chip"><img src="media/ref-lano-caramel.jpg" alt="Оттенок Карамель" width="276" height="276" loading="lazy"><div><b>Карамель</b><span>≈ #71442B</span></div></div>
         <div class="chip"><img src="media/ref-lano-darkoak.jpg" alt="Оттенок Тёмный дуб" width="276" height="276" loading="lazy"><div><b>Тёмный дуб</b><span>≈ #48362C</span></div></div>
         <div class="chip"><img src="media/ref-lano-burl.jpg" alt="Оттенок Корень ореха" width="276" height="276" loading="lazy"><div><b>Корень ореха</b><span>≈ #683A1C</span></div></div>
