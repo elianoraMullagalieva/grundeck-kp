@@ -57,7 +57,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .hero { padding-block: clamp(48px, 7vw, 130px) clamp(32px, 4vw, 64px); display: grid; gap: clamp(20px, 2vw, 32px); justify-items: center; text-align: center; }
 .hero h1 { font-size: var(--h1); line-height: .92; letter-spacing: -.05em; max-width: 13ch; }
 .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; width: min(100%, 820px); text-align: left; margin-top: 8px; }
-.facts > div { border-top: 1px solid var(--ink); padding-top: 10px; display: grid; gap: 4px; }
+.facts > div { border-top: 1px solid var(--ink); padding-top: 10px; display: grid; gap: 4px; align-content: start; }
 .facts b { font-weight: 500; font-size: var(--h4); letter-spacing: -.03em; line-height: 1.15; }
 .strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(8px, 1vw, 16px); padding-bottom: clamp(48px, 6vw, 110px); }
 .strip figure { margin: 0; display: grid; gap: 8px; }
@@ -202,7 +202,7 @@ footer { padding-block: 24px 56px; display: flex; justify-content: space-between
     <h1>Цвет и шрифт <span>GRÜNDECK</span></h1>
     <div class="facts">
       <div><span class="cap">Шрифт</span><b>Medeo Sans</b></div>
-      <div><span class="cap">Интерфейс</span><b>7 нейтральных + лён и хвоя</b></div>
+      <div><span class="cap">Интерфейс</span><b>7 нейтральных<br>+&nbsp;лён и&nbsp;хвоя</b></div>
       <div><span class="cap">Дерево</span><b>только в фото</b></div>
     </div>
   </section>
