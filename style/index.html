@@ -55,7 +55,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 
 /* Первый экран */
 .hero { padding-block: clamp(48px, 7vw, 130px) clamp(32px, 4vw, 64px); display: grid; gap: clamp(20px, 2vw, 32px); justify-items: center; text-align: center; }
-.hero h1 { font-size: var(--h1); line-height: .92; letter-spacing: -.06em; max-width: 13ch; }
+.hero h1 { font-size: var(--h1); line-height: .92; letter-spacing: -.05em; max-width: 13ch; }
 .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; width: min(100%, 820px); text-align: left; margin-top: 8px; }
 .facts > div { border-top: 1px solid var(--ink); padding-top: 10px; display: grid; gap: 4px; }
 .facts b { font-weight: 500; font-size: var(--h4); letter-spacing: -.03em; line-height: 1.15; }
@@ -69,11 +69,11 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 /* Секции */
 .sec { padding-block: clamp(56px, 6vw, 130px); border-top: 1px solid var(--stone); display: grid; gap: clamp(28px, 3vw, 56px); scroll-margin-top: 60px; }
 .sec-head { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 60px); align-items: end; }
-.sec-head h2 { font-size: var(--h2); line-height: .96; letter-spacing: -.05em; }
+.sec-head h2 { font-size: var(--h2); line-height: .96; letter-spacing: -.04em; }
 .sec-head p { color: var(--grey); font-size: var(--ts); }
 .sec-head p b { color: var(--ink); font-weight: 600; }
 .sub-head { display: flex; justify-content: space-between; align-items: end; gap: 12px; flex-wrap: wrap; }
-.sub-head h3 { font-size: var(--h3); line-height: 1.05; letter-spacing: -.04em; }
+.sub-head h3 { font-size: var(--h3); line-height: 1.05; letter-spacing: -.035em; }
 
 /* Нейтральная палитра: колонки раскрываются при наведении */
 .swatches { display: flex; border-radius: var(--r-lg); overflow: hidden; box-shadow: inset 0 0 0 1px var(--stone); }
@@ -133,9 +133,9 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .srow .meta b { font-weight: 600; font-size: 0.9375rem; display: flex; align-items: center; gap: 8px; }
 .srow .meta b i { font-style: normal; font-size: 0.6875rem; font-weight: 600; border: 1px solid rgba(18,18,18,.35); border-radius: 999px; padding: 1px 8px; }
 .srow .meta span { color: var(--grey); font-size: 0.75rem; font-variant-numeric: tabular-nums; }
-.s-h1 { font-size: var(--h1); line-height: .92; letter-spacing: -.06em; font-weight: 500; }
-.s-h2 { font-size: var(--h2); line-height: .96; letter-spacing: -.05em; font-weight: 500; }
-.s-h3 { font-size: var(--h3); line-height: 1.05; letter-spacing: -.04em; font-weight: 500; }
+.s-h1 { font-size: var(--h1); line-height: .92; letter-spacing: -.05em; font-weight: 500; }
+.s-h2 { font-size: var(--h2); line-height: .96; letter-spacing: -.04em; font-weight: 500; }
+.s-h3 { font-size: var(--h3); line-height: 1.05; letter-spacing: -.035em; font-weight: 500; }
 .s-h4 { font-size: var(--h4); line-height: 1.15; letter-spacing: -.03em; font-weight: 500; }
 .s-tm { font-size: var(--tm); line-height: 1.45; letter-spacing: -.015em; max-width: 52ch; }
 .s-ts { font-size: var(--ts); line-height: 1.5; letter-spacing: -.01em; max-width: 60ch; }
@@ -259,9 +259,9 @@ footer { padding-block: 24px 56px; display: flex; justify-content: space-between
       <div class="ctrl"><label for="wrange" class="cap">Толщина</label><input type="range" id="wrange" min="100" max="900" step="10" value="500"><output id="wout" for="wrange">500</output></div>
     </div>
     <div class="scale">
-      <div class="srow"><div class="meta"><b><i>H1</i>Главный заголовок</b><span>96 px / 44 px на телефоне</span><span>500 · межстрочный 0,92 · трекинг −6%</span></div><div class="s-h1">Террасная доска второго поколения <span>для бизнеса</span></div></div>
-      <div class="srow"><div class="meta"><b><i>H2</i>Заголовок секции</b><span>64 px / 34 px</span><span>500 · 0,96 · −5%</span></div><div class="s-h2">Займите свой город <span>первым</span></div></div>
-      <div class="srow"><div class="meta"><b><i>H3</i>Подзаголовок</b><span>40 px / 26 px</span><span>500 · 1,05 · −4%</span></div><div class="s-h3">Бесплатная доставка <span>от порога</span></div></div>
+      <div class="srow"><div class="meta"><b><i>H1</i>Главный заголовок</b><span>96 px / 44 px на телефоне</span><span>500 · межстрочный 0,92 · трекинг −5%</span></div><div class="s-h1">Террасная доска второго поколения <span>для бизнеса</span></div></div>
+      <div class="srow"><div class="meta"><b><i>H2</i>Заголовок секции</b><span>64 px / 34 px</span><span>500 · 0,96 · −4%</span></div><div class="s-h2">Займите свой город <span>первым</span></div></div>
+      <div class="srow"><div class="meta"><b><i>H3</i>Подзаголовок</b><span>40 px / 26 px</span><span>500 · 1,05 · −3,5%</span></div><div class="s-h3">Бесплатная доставка <span>от порога</span></div></div>
       <div class="srow"><div class="meta"><b><i>H4</i>Заголовок карточки</b><span>28 px / 20 px</span><span>500 · 1,15 · −3%</span></div><div class="s-h4">Монтажные компании</div></div>
       <div class="srow"><div class="meta"><b><i>M</i>Текст M</b><span>20 px / 18 px</span><span>400 · 1,45 · −1,5%</span></div><p class="s-tm">GRÜNDECK Co-Extrusion в четырёх цветах со склада в Казани. Поставляем дилерам, монтажным компаниям и строительным магазинам по всей России.</p></div>
       <div class="srow"><div class="meta"><b><i>S</i>Текст S</b><span>16 px</span><span>400 · 1,5 · −1%</span></div><p class="s-ts">Продавайте материал вместе с монтажом и зарабатывайте на обеих частях заказа. Склад в Казани — меньше денег в запасах.</p></div>
