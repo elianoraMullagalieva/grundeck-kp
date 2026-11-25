@@ -94,7 +94,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .sample b { font-weight: 500; font-size: var(--h4); letter-spacing: -.03em; line-height: 1.1; }
 .sample span { color: var(--grey); font-size: 0.8125rem; }
 
-/* Два акцента: лён и олива */
+/* Два акцента: лён и хвоя */
 .accents { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(8px, 1vw, 16px); margin-top: clamp(-20px, -1.4vw, -8px); }
 .acc { background: var(--bg); color: var(--fg, var(--ink)); border-radius: var(--r-lg); padding: clamp(16px, 1.6vw, 28px); min-height: clamp(220px, 20vw, 360px); display: flex; flex-direction: column; justify-content: space-between; gap: 20px; transition: transform .5s var(--ease); }
 .acc:hover { transform: translateY(-4px); }
@@ -202,7 +202,7 @@ footer { padding-block: 24px 56px; display: flex; justify-content: space-between
     <h1>Цвет и шрифт <span>GRÜNDECK</span></h1>
     <div class="facts">
       <div><span class="cap">Шрифт</span><b>Medeo Sans</b></div>
-      <div><span class="cap">Интерфейс</span><b>7 нейтральных + лён и олива</b></div>
+      <div><span class="cap">Интерфейс</span><b>7 нейтральных + лён и хвоя</b></div>
       <div><span class="cap">Дерево</span><b>только в фото</b></div>
     </div>
   </section>
@@ -218,7 +218,7 @@ footer { padding-block: 24px 56px; display: flex; justify-content: space-between
   <section class="sec" id="color">
     <div class="sec-head">
       <h2>Мы почти монохромны <span>цвет приносит дерево</span></h2>
-      <p><b>Семь нейтральных оттенков</b> держат весь интерфейс: фон, карточки, линии, текст и кнопки. Два тихих акцента, лён и олива, добавляют тепло точечно. Насыщенные тона дерева живут только в фото.</p>
+      <p><b>Семь нейтральных оттенков</b> держат весь интерфейс: фон, карточки, линии, текст и кнопки. Два акцента добавляют характер точечно: тёплый лён и фирменная хвоя из логотипа. Насыщенные тона дерева живут только в фото.</p>
     </div>
     <div class="swatches">
       <div class="sw" style="background:#FFFFFF"><b>Лист</b><div><span class="hex">#FFFFFF</span><span>фон страниц</span></div></div>
@@ -235,15 +235,15 @@ footer { padding-block: 24px 56px; display: flex; justify-content: space-between
         <div><span class="cap">Акцент 1 · тёплый, но не жёлтый</span><b>Лён</b></div>
         <div><span class="hex">#E6E1D8</span><p>Крупные тёплые подложки: блок образцов, карточка дилера, форма заявки. Фоном всей страницы не становится.</p></div>
       </div>
-      <div class="acc" style="--bg:#6B7050;--fg:#F5F3EE">
-        <div><span class="cap">Акцент 2 · олива из lano, светлее</span><b>Олива</b></div>
-        <div><span class="hex">#6B7050</span><p>Точечно: метка «в наличии», город на карте дилеров, иконки, активная вкладка. Кнопки остаются чёрными.</p></div>
+      <div class="acc" style="--bg:#0B3F41;--fg:#E6E1D8">
+        <div><span class="cap">Акцент 2 · фирменный, из логотипа</span><b>Хвоя</b></div>
+        <div><span class="hex">#0B3F41</span><p>Логотип, метка «в наличии», город на карте дилеров, иконки, активная вкладка, один тёмный баннер. Кнопки остаются чёрными.</p></div>
       </div>
       <div class="pairs">
         <span class="cap">Сочетания, которые работают</span>
-        <div class="pair" style="background:#E6E1D8;color:#121212"><b>Аа</b><span>Лён + Чернила</span></div>
-        <div class="pair" style="background:#6B7050;color:#E6E1D8"><b>Аа</b><span>Олива + Лён</span></div>
-        <div class="pair" style="background:#F5F5F4;color:#6B7050"><b>Аа</b><span>Молоко + Олива</span></div>
+        <div class="pair" style="background:#E6E1D8;color:#0B3F41"><b>Аа</b><span>Лён + Хвоя · как в логотипе</span></div>
+        <div class="pair" style="background:#0B3F41;color:#E6E1D8"><b>Аа</b><span>Хвоя + Лён</span></div>
+        <div class="pair" style="background:#F5F5F4;color:#0B3F41"><b>Аа</b><span>Молоко + Хвоя</span></div>
         <div class="pair" style="background:#121212;color:#E6E1D8"><b>Аа</b><span>Чернила + Лён</span></div>
       </div>
     </div>
@@ -251,7 +251,7 @@ footer { padding-block: 24px 56px; display: flex; justify-content: space-between
     <div class="sub-head wood-head">
       <h3>Оттенки дерева и зелёный<br><span>живут только в картинках</span></h3>
       <div class="chips">
-        <div class="chip"><img src="media/ref-lano-olive.jpg" alt="Оттенок Олива" width="276" height="276" loading="lazy"><div><b>Олива</b><span>≈ #646A4A</span></div></div>
+        <div class="chip"><img src="media/ref-green-hvoya.jpg" alt="Оттенок Хвоя" width="276" height="276" loading="lazy"><div><b>Хвоя</b><span>≈ #283F42</span></div></div>
         <div class="chip"><img src="media/ref-lano-caramel.jpg" alt="Оттенок Карамель" width="276" height="276" loading="lazy"><div><b>Карамель</b><span>≈ #71442B</span></div></div>
         <div class="chip"><img src="media/ref-lano-darkoak.jpg" alt="Оттенок Тёмный дуб" width="276" height="276" loading="lazy"><div><b>Тёмный дуб</b><span>≈ #48362C</span></div></div>
         <div class="chip"><img src="media/ref-lano-burl.jpg" alt="Оттенок Корень ореха" width="276" height="276" loading="lazy"><div><b>Корень ореха</b><span>≈ #683A1C</span></div></div>
