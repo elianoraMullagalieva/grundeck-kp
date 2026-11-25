@@ -72,7 +72,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 
 /* Нейтральная палитра: колонки раскрываются при наведении */
 .swatches { display: flex; border-radius: var(--r-lg); overflow: hidden; box-shadow: inset 0 0 0 1px var(--stone); }
-.sw { flex: 1 1 0; min-height: clamp(240px, 26vw, 440px); padding: clamp(12px, 1.2vw, 20px); display: flex; flex-direction: column; justify-content: space-between; gap: 12px; min-width: 0; transition: flex-grow .6s var(--ease); }
+.sw { flex: 1 1 0; min-height: clamp(150px, 13vw, 240px); padding: clamp(12px, 1.2vw, 20px); display: flex; flex-direction: column; justify-content: space-between; gap: 12px; min-width: 0; transition: flex-grow .6s var(--ease); }
 .sw:hover { flex-grow: 1.9; }
 .sw b { font-weight: 500; font-size: 1.0625rem; letter-spacing: -.03em; }
 .sw span { font-size: 0.75rem; line-height: 1.4; display: block; }
@@ -127,7 +127,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .rule { display: flex; gap: 10px 26px; flex-wrap: wrap; font-size: 0.875rem; }
 .rule span { display: inline-flex; align-items: center; gap: 8px; }
 .rule span::before { content: ""; width: 18px; height: 18px; border-radius: 50%; flex: none; background: var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M5 9.2l2.6 2.6L13 6.4' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 18px no-repeat; }
-.rule span.no::before { background: var(--fog) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M6 6l6 6M12 6l-6 6' fill='none' stroke='%23121212' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") center / 18px no-repeat; }
+.rule span.no::before { background: var(--stone) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M6 6l6 6M12 6l-6 6' fill='none' stroke='%23121212' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") center / 18px no-repeat; }
 
 /* Шрифт */
 .weight-demo { background: var(--milk); border-radius: var(--r-lg); padding: var(--pad); display: grid; gap: 16px; }
@@ -157,15 +157,16 @@ footer { padding-block: 24px 56px; display: flex; justify-content: space-between
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
 @media (max-width: 1100px) {
-  .swatches { flex-wrap: wrap; }
-  .sw { flex: 1 1 25%; }
   .sw:hover { flex-grow: 1; }
 }
 @media (max-width: 760px) {
   .sec-head { grid-template-columns: 1fr; }
   .facts { grid-template-columns: 1fr; }
   .strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .sw { flex: 1 1 50%; min-height: 150px; }
+  .swatches { flex-direction: column; }
+  .sw { flex: none; min-height: 0; flex-direction: row; align-items: center; padding: 16px; }
+  .sw > div { display: flex; gap: 10px; align-items: baseline; text-align: right; }
+  .sw > div span:last-child { opacity: .75; }
   .samples { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .wood-head { grid-template-columns: 1fr; }
   .wood-head h3 { white-space: normal; }
@@ -195,7 +196,7 @@ footer { padding-block: 24px 56px; display: flex; justify-content: space-between
     <h1>Цвет и шрифт <span>GRÜNDECK</span></h1>
     <div class="facts">
       <div><span class="cap">Шрифт</span><b>Medeo Sans</b></div>
-      <div><span class="cap">Интерфейс</span><b>7 нейтральных<br>+&nbsp;лён и&nbsp;хвоя</b></div>
+      <div><span class="cap">Интерфейс</span><b>5 нейтральных<br>+&nbsp;лён и&nbsp;хвоя</b></div>
       <div><span class="cap">Дерево</span><b>только в фото</b></div>
     </div>
   </section>
@@ -211,15 +212,13 @@ footer { padding-block: 24px 56px; display: flex; justify-content: space-between
   <section class="sec" id="color">
     <div class="sec-head">
       <h2>Мы почти монохромны <span>цвет приносит дерево</span></h2>
-      <p><b>Семь нейтральных оттенков</b> держат весь интерфейс: фон, карточки, линии, текст и кнопки. Два акцента добавляют характер точечно: тёплый лён и фирменная хвоя из логотипа. Насыщенные тона дерева живут только в фото.</p>
+      <p><b>Пять нейтральных оттенков</b> держат весь интерфейс: фон, карточки, линии, текст и кнопки. Два акцента добавляют характер точечно: тёплый лён и фирменная хвоя из логотипа. Насыщенные тона дерева живут только в фото.</p>
     </div>
     <div class="swatches">
       <div class="sw" style="background:#FFFFFF"><b>Лист</b><div><span class="hex">#FFFFFF</span><span>фон страниц</span></div></div>
       <div class="sw" style="background:#F5F5F4"><b>Молоко</b><div><span class="hex">#F5F5F4</span><span>подложки и карточки</span></div></div>
-      <div class="sw" style="background:#EBEBEA"><b>Камень</b><div><span class="hex">#EBEBEA</span><span>плашки и поля</span></div></div>
-      <div class="sw" style="background:#D9D9D8"><b>Туман</b><div><span class="hex">#D9D9D8</span><span>линии и рамки</span></div></div>
+      <div class="sw" style="background:#EBEBEA"><b>Камень</b><div><span class="hex">#EBEBEA</span><span>плашки, поля и линии</span></div></div>
       <div class="sw dark" style="background:#8C8C8B"><b>Серый</b><div><span class="hex">#8C8C8B</span><span>второй тон заголовков</span></div></div>
-      <div class="sw dark" style="background:#3A3A3A"><b>Графит</b><div><span class="hex">#3A3A3A</span><span>тёмные блоки</span></div></div>
       <div class="sw dark" style="background:#121212"><b>Чернила</b><div><span class="hex">#121212</span><span>текст и кнопки</span></div></div>
     </div>
 
