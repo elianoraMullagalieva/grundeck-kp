@@ -48,18 +48,18 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .nav a { color: var(--grey); text-decoration: none; transition: color .2s ease; }
 .nav a:hover, .nav a:focus-visible { color: var(--ink); }
 
-/* Первый экран */
-.hero { padding-block: clamp(48px, 7vw, 130px) clamp(32px, 4vw, 64px); display: grid; gap: clamp(20px, 2vw, 32px); justify-items: center; text-align: center; }
-.hero h1 { font-size: var(--h1); line-height: .92; letter-spacing: -.05em; max-width: 13ch; }
-.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; width: min(100%, 820px); text-align: left; margin-top: 8px; }
-.facts > div { border-top: 1px solid var(--ink); padding-top: 10px; display: grid; gap: 4px; align-content: start; }
-.facts b { font-weight: 500; font-size: var(--h4); letter-spacing: -.03em; line-height: 1.15; }
-.strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(8px, 1vw, 16px); padding-bottom: clamp(48px, 6vw, 110px); }
-.strip figure { margin: 0; display: grid; gap: 8px; }
-.strip .ph { overflow: hidden; border-radius: var(--r-md); }
-.strip img { width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; display: block; transition: transform 1.2s var(--ease); }
-.strip figure:hover img { transform: scale(1.05); }
-.strip figure:nth-child(even) { transform: translateY(clamp(12px, 2vw, 36px)); }
+/* Первый экран: текст слева, одно фото справа */
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .8fr); gap: clamp(28px, 5vw, 120px); padding-block: clamp(40px, 5vw, 96px) clamp(64px, 7vw, 140px); }
+.hero-txt { display: flex; flex-direction: column; gap: clamp(32px, 4vw, 64px); min-width: 0; }
+.hero h1 { margin-top: clamp(14px, 1.4vw, 22px); font-size: var(--h1); line-height: .92; letter-spacing: -.05em; }
+.facts { margin: auto 0 0; max-width: 560px; border-top: 1px solid var(--ink); }
+.facts div { display: grid; grid-template-columns: minmax(96px, .42fr) minmax(0, 1fr); gap: 16px; padding-block: clamp(12px, 1.1vw, 18px); border-bottom: 1px solid var(--stone); align-items: baseline; }
+.facts dt { font-size: 0.8125rem; font-weight: 500; color: var(--grey); }
+.facts dd { margin: 0; font-size: var(--tm); font-weight: 500; letter-spacing: -.02em; line-height: 1.25; }
+.hero-ph { margin: 0; position: relative; overflow: hidden; border-radius: var(--r-lg); aspect-ratio: 4 / 5; max-height: calc(100svh - 150px); min-height: 420px; background: var(--milk); }
+.hero-ph img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; display: block; transition: transform 1.6s var(--ease); }
+.hero-ph:hover img { transform: scale(1.03); }
+.hero-ph figcaption { position: absolute; left: 14px; bottom: 14px; font-size: 0.75rem; font-weight: 500; background: rgba(255,255,255,.92); padding: 5px 12px; border-radius: 999px; }
 
 /* Секции */
 .sec { padding-block: clamp(56px, 6vw, 130px); border-top: 1px solid var(--stone); display: grid; gap: clamp(28px, 3vw, 56px); scroll-margin-top: 60px; }
@@ -70,38 +70,26 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .sub-head { display: flex; justify-content: space-between; align-items: end; gap: 12px; flex-wrap: wrap; }
 .sub-head h3 { font-size: var(--h3); line-height: 1.05; letter-spacing: -.035em; }
 
-/* Нейтральная палитра: колонки раскрываются при наведении */
-.swatches { display: flex; border-radius: var(--r-lg); overflow: hidden; box-shadow: inset 0 0 0 1px var(--stone); }
-.sw { flex: 1 1 0; min-height: clamp(150px, 13vw, 240px); padding: clamp(12px, 1.2vw, 20px); display: flex; flex-direction: column; justify-content: space-between; gap: 12px; min-width: 0; transition: flex-grow .6s var(--ease); }
-.sw:hover { flex-grow: 1.9; }
-.sw b { font-weight: 500; font-size: 1.0625rem; letter-spacing: -.03em; }
-.sw span { font-size: 0.75rem; line-height: 1.4; display: block; }
-.sw .hex { font-variant-numeric: tabular-nums; opacity: .75; transition: font-size .4s var(--ease), opacity .4s ease; }
-.sw:hover .hex { font-size: 1.125rem; opacity: 1; }
-.sw.dark { color: var(--leaf); }
-
-/* Образцы дерева: квадраты с мягкой тенью */
-.samples { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 28px); }
-.sample { display: grid; gap: 12px; }
-.tile { aspect-ratio: 1; border-radius: var(--r-md); overflow: hidden; box-shadow: 0 22px 34px -14px rgba(0,0,0,.38), 0 2px 6px rgba(0,0,0,.08); transition: transform .5s var(--ease), box-shadow .5s var(--ease); }
-.sample:hover .tile { transform: translateY(-6px); box-shadow: 0 32px 44px -16px rgba(0,0,0,.42), 0 2px 6px rgba(0,0,0,.08); }
-.tile img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(var(--s, 3)); transform-origin: var(--o, 50% 50%); object-position: var(--o, 50% 50%); }
-.sample b { font-weight: 500; font-size: var(--h4); letter-spacing: -.03em; line-height: 1.1; }
-.sample span { color: var(--grey); font-size: 0.8125rem; }
-
-/* Два акцента: лён и хвоя */
-.accents { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(8px, 1vw, 16px); margin-top: clamp(-20px, -1.4vw, -8px); }
-.acc { background: var(--bg); color: var(--fg, var(--ink)); border-radius: var(--r-lg); padding: clamp(16px, 1.6vw, 28px); min-height: clamp(220px, 20vw, 360px); display: flex; flex-direction: column; justify-content: space-between; gap: 20px; transition: transform .5s var(--ease); }
-.acc:hover { transform: translateY(-4px); }
-.acc .cap { color: inherit; opacity: .6; }
-.acc b { display: block; margin-top: 6px; font-size: var(--h3); font-weight: 500; letter-spacing: -.035em; line-height: 1.05; }
-.acc .hex { display: block; font-size: var(--h4); font-weight: 500; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
-.acc p { margin-top: 8px; font-size: 0.875rem; line-height: 1.45; opacity: .8; max-width: 34ch; }
-.pairs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto 1fr 1fr; gap: clamp(8px, 1vw, 16px); }
-.pairs .cap { grid-column: 1 / -1; }
-.pair { border-radius: var(--r-md); padding: clamp(12px, 1.2vw, 18px); display: flex; flex-direction: column; justify-content: space-between; gap: 10px; min-height: 110px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.05); }
-.pair b { font-size: var(--h3); font-weight: 500; letter-spacing: -.035em; line-height: 1; }
-.pair span { font-size: 0.75rem; font-weight: 500; }
+/* Палитра плитками: размер = вес цвета */
+.palette { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: clamp(112px, 9.4vw, 180px); gap: clamp(8px, .9vw, 14px); }
+.tl { background: var(--bg); color: var(--fg, var(--ink)); border-radius: var(--r-lg); padding: clamp(14px, 1.4vw, 24px); display: flex; flex-direction: column; justify-content: space-between; gap: 12px; min-width: 0; transition: transform .5s var(--ease); }
+.tl:hover { transform: translateY(-4px); }
+.tl.big { grid-column: span 2; grid-row: span 2; }
+.tl.tall { grid-row: span 2; }
+.tl.line { box-shadow: inset 0 0 0 1px var(--stone); }
+.tl b { display: block; font-weight: 500; font-size: var(--tm); letter-spacing: -.03em; line-height: 1.1; }
+.tl.big b, .tl.tall b { font-size: var(--h4); }
+.tl.big b { font-size: var(--h3); letter-spacing: -.035em; }
+.tl .role { display: block; margin-top: 6px; font-size: 0.8125rem; opacity: .7; max-width: 36ch; }
+.tl .code { margin: 0; display: grid; grid-template-columns: repeat(2, max-content); gap: 0 clamp(16px, 2vw, 40px); font-size: 0.75rem; font-variant-numeric: tabular-nums; }
+.tl .code dt { opacity: .55; font-weight: 500; }
+.tl .code dd { margin: 0; grid-row: 2; font-weight: 500; }
+.pal-note { margin-top: calc(clamp(28px, 3vw, 56px) * -0.55); }
+.logos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(8px, .9vw, 14px); }
+.lg { position: relative; background: var(--bg); color: var(--fg); border-radius: var(--r-lg); aspect-ratio: 16 / 10; display: grid; place-items: center; padding: 0 13%; transition: transform .5s var(--ease); }
+.lg:hover { transform: translateY(-4px); }
+.lg i { display: block; width: 100%; aspect-ratio: 1832 / 510; background: currentColor; -webkit-mask: url("media/logo-mask.png") center / contain no-repeat; mask: url("media/logo-mask.png") center / contain no-repeat; }
+.lg span { position: absolute; left: clamp(14px, 1.4vw, 24px); bottom: clamp(12px, 1.2vw, 20px); font-size: 0.75rem; font-weight: 500; opacity: .6; }
 
 /* Оттенки дерева: мелкие чипы из референса */
 .wood-head { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: clamp(24px, 4vw, 80px); row-gap: 14px; align-items: start; }
@@ -112,7 +100,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .chip:hover img { transform: translateY(-4px) rotate(-2deg); }
 .chip b { display: block; font-size: var(--tm); font-weight: 500; letter-spacing: -.03em; line-height: 1.1; }
 .chip span { display: block; margin-top: 6px; font-size: 0.8125rem; color: var(--grey); }
-.samples-cap { margin-top: clamp(28px, 3vw, 48px); margin-bottom: 12px; }
 
 /* Где живёт коричневый: редакционная раскладка */
 .collage { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(8px, 1vw, 16px); }
@@ -129,13 +116,21 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .rule span::before { content: ""; width: 18px; height: 18px; border-radius: 50%; flex: none; background: var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M5 9.2l2.6 2.6L13 6.4' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 18px no-repeat; }
 .rule span.no::before { background: var(--stone) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M6 6l6 6M12 6l-6 6' fill='none' stroke='%23121212' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") center / 18px no-repeat; }
 
-/* Шрифт */
-.weight-demo { background: var(--milk); border-radius: var(--r-lg); padding: var(--pad); display: grid; gap: 16px; }
-.weight-demo .word { font-size: clamp(3.2rem, 1.2rem + 8vw, 10rem); line-height: .9; letter-spacing: -.06em; font-weight: 500; overflow-wrap: anywhere; }
-.weight-demo .ctrl { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-.weight-demo input[type="range"] { flex: 1 1 220px; accent-color: var(--ink); }
-.weight-demo input[type="range"]:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
-.weight-demo output { font-variant-numeric: tabular-nums; font-size: 0.875rem; min-width: 3ch; }
+/* Шрифт: тёмная карточка с начертаниями */
+.type-card { background: var(--ink); color: #F5F5F4; border-radius: var(--r-lg); overflow: hidden; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-height: clamp(460px, 42vw, 760px); }
+.tc-left { padding: var(--pad); display: flex; flex-direction: column; gap: clamp(20px, 2vw, 32px); border-right: 1px solid rgba(255,255,255,.16); min-width: 0; }
+.type-card .cap { color: rgba(245,245,244,.5); }
+.tc-name { margin-top: auto; padding-bottom: clamp(20px, 2vw, 32px); border-bottom: 1px solid rgba(245,245,244,.3); font-size: var(--h1); font-weight: 400; line-height: .92; letter-spacing: -.05em; }
+.tc-meta { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1fr); gap: clamp(16px, 2vw, 40px); }
+.tc-w { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 6px; font-size: var(--tm); letter-spacing: -.02em; line-height: 1.2; }
+.tc-w span { display: block; font-size: 0.75rem; font-weight: 400; color: rgba(245,245,244,.5); letter-spacing: 0; margin-top: 2px; }
+.tc-abc { margin-top: 12px; font-size: 0.875rem; line-height: 1.6; color: rgba(245,245,244,.78); max-width: none; }
+.tc-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); min-height: 280px; }
+.tc-col { position: relative; background: var(--ink); border-left: 1px solid rgba(245,245,244,.16); padding: clamp(14px, 1.4vw, 24px); }
+.tc-col:first-child { border-left: 0; }
+.tc-col:nth-child(2) { z-index: 1; } .tc-col:nth-child(3) { z-index: 2; }
+.tc-col .cap { position: relative; z-index: 1; }
+.tc-col i { position: absolute; left: -.03em; bottom: -.215em; font-style: normal; font-weight: var(--w); font-size: clamp(15rem, 40vw, 60rem); line-height: 1; letter-spacing: 0; color: #F5F5F4; pointer-events: none; }
 .scale { border-top: 1px solid var(--ink); }
 .srow { display: grid; grid-template-columns: minmax(170px, 0.3fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 60px); padding-block: clamp(18px, 2vw, 34px); border-bottom: 1px solid var(--stone); align-items: baseline; }
 .srow .meta { display: grid; gap: 3px; }
@@ -157,23 +152,26 @@ footer { padding-block: 24px 56px; display: flex; justify-content: space-between
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
 @media (max-width: 1100px) {
-  .sw:hover { flex-grow: 1; }
+  .type-card { grid-template-columns: 1fr; }
+  .tc-left { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.16); }
+  .tc-cols { min-height: clamp(260px, 40vw, 420px); }
+  .tc-col i { font-size: clamp(13rem, 56vw, 40rem); }
 }
 @media (max-width: 760px) {
   .sec-head { grid-template-columns: 1fr; }
-  .facts { grid-template-columns: 1fr; }
-  .strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .swatches { flex-direction: column; }
-  .sw { flex: none; min-height: 0; flex-direction: row; align-items: center; padding: 16px; }
-  .sw > div { display: flex; gap: 10px; align-items: baseline; text-align: right; }
-  .sw > div span:last-child { opacity: .75; }
-  .samples { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hero { grid-template-columns: 1fr; padding-top: 32px; }
+  .hero-ph { max-height: none; min-height: 0; }
+  .palette { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 104px; }
+  .tc-meta { grid-template-columns: 1fr; }
+  .tc-cols { min-height: 230px; }
+  .logos { grid-template-columns: 1fr; }
+  .tl .code { grid-template-columns: max-content minmax(0, 1fr); gap: 2px 10px; }
+  .tl .code dd { grid-row: auto; }
+  .lg { aspect-ratio: 16 / 8; }
   .wood-head { grid-template-columns: 1fr; }
   .wood-head h3 { white-space: normal; }
   .chips { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
   .chip span { font-size: 0.6875rem; }
-  .accents { grid-template-columns: 1fr; margin-top: 0; }
-  .acc { min-height: 200px; }
   .chip img { width: 100%; height: auto; aspect-ratio: 1; }
   .chip b { font-size: 0.875rem; }
   .crow { flex-direction: column; }
@@ -192,21 +190,19 @@ footer { padding-block: 24px 56px; display: flex; justify-content: space-between
 <main class="page">
 
   <section class="hero">
-    <span class="cap">GRÜNDECK · стиль сайта 2026</span>
-    <h1>Цвет и шрифт <span>GRÜNDECK</span></h1>
-    <div class="facts">
-      <div><span class="cap">Шрифт</span><b>Medeo Sans</b></div>
-      <div><span class="cap">Интерфейс</span><b>5 нейтральных<br>+&nbsp;лён и&nbsp;хвоя</b></div>
-      <div><span class="cap">Дерево</span><b>только в фото</b></div>
+    <div class="hero-txt">
+      <div>
+        <span class="cap">GRÜNDECK · стиль сайта 2026</span>
+        <h1>Цвет и шрифт <span>GRÜNDECK</span></h1>
+      </div>
+      <dl class="facts">
+        <div><dt>Шрифт</dt><dd>Medeo Sans</dd></div>
+        <div><dt>Интерфейс</dt><dd>5 нейтральных + лён и&nbsp;хвоя</dd></div>
+        <div><dt>Дерево</dt><dd>только в фото</dd></div>
+      </dl>
     </div>
+    <figure class="hero-ph"><img src="media/graphite-1.jpg" alt="Крыльцо и ступени GRÜNDECK, цвет Графит" width="960" height="1280"><figcaption>Графит · крыльцо</figcaption></figure>
   </section>
-
-  <div class="strip">
-    <figure><div class="ph"><img src="media/walnut-2.jpg" alt="Терраса GRÜNDECK, цвет Орех" width="960" height="1280"></div><span class="cap">Орех</span></figure>
-    <figure><div class="ph"><img src="media/chocolate-2.jpg" alt="Терраса GRÜNDECK, цвет Шоколад" width="960" height="1280"></div><span class="cap">Шоколад</span></figure>
-    <figure><div class="ph"><img src="media/graphite-1.jpg" alt="Крыльцо GRÜNDECK, цвет Графит" width="960" height="1280"></div><span class="cap">Графит</span></figure>
-    <figure><div class="ph"><img src="media/ash-1.jpg" alt="Настил GRÜNDECK, цвет Пепел" width="960" height="1280"></div><span class="cap">Пепел</span></figure>
-  </div>
 
   <!-- Цвет -->
   <section class="sec" id="color">
@@ -214,30 +210,25 @@ footer { padding-block: 24px 56px; display: flex; justify-content: space-between
       <h2>Мы почти монохромны <span>цвет приносит дерево</span></h2>
       <p><b>Пять нейтральных оттенков</b> держат весь интерфейс: фон, карточки, линии, текст и кнопки. Два акцента добавляют характер точечно: тёплый лён и фирменная хвоя из логотипа. Насыщенные тона дерева живут только в фото.</p>
     </div>
-    <div class="swatches">
-      <div class="sw" style="background:#FFFFFF"><b>Лист</b><div><span class="hex">#FFFFFF</span><span>фон страниц</span></div></div>
-      <div class="sw" style="background:#F5F5F4"><b>Молоко</b><div><span class="hex">#F5F5F4</span><span>подложки и карточки</span></div></div>
-      <div class="sw" style="background:#EBEBEA"><b>Камень</b><div><span class="hex">#EBEBEA</span><span>плашки, поля и линии</span></div></div>
-      <div class="sw dark" style="background:#8C8C8B"><b>Серый</b><div><span class="hex">#8C8C8B</span><span>второй тон заголовков</span></div></div>
-      <div class="sw dark" style="background:#121212"><b>Чернила</b><div><span class="hex">#121212</span><span>текст и кнопки</span></div></div>
+    <div class="palette">
+      <div class="tl big" style="--bg:#0B3F41;--fg:#E6E1D8"><div><b>Хвоя</b><span class="role">Фирменный, из логотипа. Логотип, метка «в наличии», иконки, активная вкладка, один тёмный баннер</span></div><dl class="code"><dt>HEX</dt><dd>#0B3F41</dd><dt>RGB</dt><dd>11, 63, 65</dd></dl></div>
+      <div class="tl tall" style="--bg:#121212;--fg:#FFFFFF"><div><b>Чернила</b><span class="role">Текст и кнопки</span></div><dl class="code"><dt>HEX</dt><dd>#121212</dd><dt>RGB</dt><dd>18, 18, 18</dd></dl></div>
+      <div class="tl tall" style="--bg:#E6E1D8;--fg:#0B3F41"><div><b>Лён</b><span class="role">Тёплые подложки: образцы, дилер, заявка</span></div><dl class="code"><dt>HEX</dt><dd>#E6E1D8</dd><dt>RGB</dt><dd>230, 225, 216</dd></dl></div>
+      <div class="tl line" style="--bg:#FFFFFF"><b>Лист</b><dl class="code"><dt>HEX</dt><dd>#FFFFFF</dd><dt>RGB</dt><dd>255, 255, 255</dd></dl></div>
+      <div class="tl" style="--bg:#F5F5F4"><b>Молоко</b><dl class="code"><dt>HEX</dt><dd>#F5F5F4</dd><dt>RGB</dt><dd>245, 245, 244</dd></dl></div>
+      <div class="tl" style="--bg:#EBEBEA"><b>Камень</b><dl class="code"><dt>HEX</dt><dd>#EBEBEA</dd><dt>RGB</dt><dd>235, 235, 234</dd></dl></div>
+      <div class="tl" style="--bg:#8C8C8B;--fg:#FFFFFF"><b>Серый</b><dl class="code"><dt>HEX</dt><dd>#8C8C8B</dd><dt>RGB</dt><dd>140, 140, 139</dd></dl></div>
     </div>
+    <p class="cap pal-note">Чем больше плитка, тем важнее цвет. Текст на плитках — рабочие пары: лён на хвое, хвоя на льне, белый на чернилах.</p>
 
-    <div class="accents">
-      <div class="acc" style="--bg:#E6E1D8">
-        <div><span class="cap">Акцент 1 · тёплый, но не жёлтый</span><b>Лён</b></div>
-        <div><span class="hex">#E6E1D8</span><p>Крупные тёплые подложки: блок образцов, карточка дилера, форма заявки. Фоном всей страницы не становится.</p></div>
-      </div>
-      <div class="acc" style="--bg:#0B3F41;--fg:#E6E1D8">
-        <div><span class="cap">Акцент 2 · фирменный, из логотипа</span><b>Хвоя</b></div>
-        <div><span class="hex">#0B3F41</span><p>Логотип, метка «в наличии», город на карте дилеров, иконки, активная вкладка, один тёмный баннер. Кнопки остаются чёрными.</p></div>
-      </div>
-      <div class="pairs">
-        <span class="cap">Сочетания, которые работают</span>
-        <div class="pair" style="background:#E6E1D8;color:#0B3F41"><b>Аа</b><span>Лён + Хвоя · как в логотипе</span></div>
-        <div class="pair" style="background:#0B3F41;color:#E6E1D8"><b>Аа</b><span>Хвоя + Лён</span></div>
-        <div class="pair" style="background:#F5F5F4;color:#0B3F41"><b>Аа</b><span>Молоко + Хвоя</span></div>
-        <div class="pair" style="background:#121212;color:#E6E1D8"><b>Аа</b><span>Чернила + Лён</span></div>
-      </div>
+    <div class="sub-head">
+      <h3>Логотип <span>на фирменных парах</span></h3>
+      <span class="cap">Цвет логотипа пока одна из вариаций</span>
+    </div>
+    <div class="logos">
+      <div class="lg" style="--bg:#E6E1D8;--fg:#0B3F41"><i role="img" aria-label="Логотип GRÜNDECK"></i><span>Хвоя на льне</span></div>
+      <div class="lg" style="--bg:#0B3F41;--fg:#E6E1D8"><i role="img" aria-label="Логотип GRÜNDECK"></i><span>Лён на хвое</span></div>
+      <div class="lg" style="--bg:#121212;--fg:#FFFFFF"><i role="img" aria-label="Логотип GRÜNDECK"></i><span>Белый на чернилах</span></div>
     </div>
 
     <div class="sub-head wood-head">
@@ -249,14 +240,6 @@ footer { padding-block: 24px 56px; display: flex; justify-content: space-between
         <div class="chip"><img src="media/ref-lano-burl.jpg" alt="Оттенок Корень ореха" width="276" height="276" loading="lazy"><div><b>Корень ореха</b><span>≈ #683A1C</span></div></div>
       </div>
     </div>
-    <p class="cap samples-cap">Крупно — образцы GRÜNDECK, вырезаны из реальных фото</p>
-    <div class="samples">
-      <div class="sample"><div class="tile"><img src="media/walnut-1.jpg" alt="Текстура доски Орех" width="1280" height="960" style="--s:3.4;--o:52% 68%" loading="lazy"></div><b>Орех</b><span>тёплый средний коричневый</span></div>
-      <div class="sample"><div class="tile"><img src="media/chocolate-1.jpg" alt="Текстура доски Шоколад" width="1280" height="960" style="--s:3.6;--o:72% 69%" loading="lazy"></div><b>Шоколад</b><span>глубокий тёмно-коричневый</span></div>
-      <div class="sample"><div class="tile"><img src="media/graphite-1.jpg" alt="Текстура доски Графит" width="960" height="1280" style="--s:3.2;--o:62% 64%" loading="lazy"></div><b>Графит</b><span>тёмно-серый</span></div>
-      <div class="sample"><div class="tile"><img src="media/ash-2.jpg" alt="Текстура доски Пепел" width="1280" height="960" style="--s:2;--o:55% 60%" loading="lazy"></div><b>Пепел</b><span>светлый серый</span></div>
-    </div>
-
     <div class="sub-head">
       <h3>Коричневый живёт <span>в фото и продукте</span></h3>
     </div>
@@ -281,12 +264,30 @@ footer { padding-block: 24px 56px; display: flex; justify-content: space-between
   <section class="sec" id="type">
     <div class="sec-head">
       <h2>Один шрифт <span>лёгкий и плотный</span></h2>
-      <p><b>Medeo Sans, вес 400 и 500.</b> Четыре уровня заголовков, два размера текста и цифры. Вторая половина заголовка серым.</p>
+      <p><b>Medeo Sans, вес 400 и 500.</b> Четыре уровня заголовков, два размера текста и цифры. Вторая половина заголовка серым. 600 только в логотипе.</p>
     </div>
-    <div class="weight-demo">
-      <span class="cap">Medeo Sans — вариативный шрифт, потяните</span>
-      <div class="word" id="wword">GRÜNDECK</div>
-      <div class="ctrl"><label for="wrange" class="cap">Толщина</label><input type="range" id="wrange" min="100" max="900" step="10" value="500"><output id="wout" for="wrange">500</output></div>
+    <div class="type-card">
+      <div class="tc-left">
+        <span class="cap">Шрифт бренда</span>
+        <div class="tc-name">Medeo Sans</div>
+        <div class="tc-meta">
+          <div><span class="cap">Начертания</span>
+            <ul class="tc-w">
+              <li style="font-weight:400">Regular 400<span>текст и цифры</span></li>
+              <li style="font-weight:500">Medium 500<span>заголовки и кнопки</span></li>
+              <li style="font-weight:600">SemiBold 600<span>логотип в шапке</span></li>
+            </ul>
+          </div>
+          <div><span class="cap">Знаки</span>
+            <p class="tc-abc">Аа Бб Вв Гг Дд Ее Ёё Жж Зз Ии Йй Кк Лл Мм Нн Оо Пп Рр Сс Тт Уу Фф Хх Цц Чч Шш Щщ Ъъ Ыы Ьь Ээ Юю Яя<br>Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz<br>0 1 2 3 4 5 6 7 8 9 ₽ % № м²</p>
+          </div>
+        </div>
+      </div>
+      <div class="tc-cols" aria-hidden="true">
+        <div class="tc-col" style="--w:400"><span class="cap">Regular</span><i>а</i></div>
+        <div class="tc-col" style="--w:500"><span class="cap">Medium</span><i>а</i></div>
+        <div class="tc-col" style="--w:600"><span class="cap">SemiBold</span><i>а</i></div>
+      </div>
     </div>
     <div class="scale">
       <div class="srow"><div class="meta"><b><i>H1</i>Главный заголовок</b><span>96 px / 44 px на телефоне</span><span>500 · межстрочный 0,92 · трекинг −5%</span></div><div class="s-h1">Террасная доска второго поколения <span>для бизнеса</span></div></div>
@@ -303,9 +304,3 @@ footer { padding-block: 24px 56px; display: flex; justify-content: space-between
 
 <footer class="page"><span class="cap">GRÜNDECK · цвет и шрифт</span><span class="cap">Подготовила Элианора</span></footer>
 
-<script>
-(function () {
-  var wr = document.getElementById('wrange'), ww = document.getElementById('wword'), wo = document.getElementById('wout');
-  wr.addEventListener('input', function () { ww.style.fontWeight = wr.value; wo.textContent = wr.value; });
-})();
-</script>
