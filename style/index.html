@@ -32,7 +32,9 @@
   color-scheme: light;
 }
 * { box-sizing: border-box; }
-html { font-size: clamp(100%, 87% + 0.35vw, 130%); scroll-behavior: smooth; }
+/* Корень 16 px: шкала точная на 1440, потолок растёт только на больших экранах */
+html { font-size: 100%; scroll-behavior: smooth; }
+@media (min-width: 1921px) { html { font-size: 112.5%; } }
 body { background: var(--leaf); color: var(--ink); font-family: var(--font); font-optical-sizing: auto; font-size: var(--ts); line-height: 1.5; letter-spacing: -.01em; }
 .page { max-width: 2400px; margin: 0 auto; padding-left: max(clamp(1rem, 0.4rem + 3.6vw, 5rem), env(safe-area-inset-left, 0px)); padding-right: max(clamp(1rem, 0.4rem + 3.6vw, 5rem), env(safe-area-inset-right, 0px)); }
 h1, h2, h3, h4 { margin: 0; font-weight: 500; text-wrap: balance; }
